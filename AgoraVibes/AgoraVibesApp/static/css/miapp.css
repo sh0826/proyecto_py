@@ -1,0 +1,35 @@
+.barraNav{
+    background-color: aliceblue;
+    color: green;
+    padding: 0;
+    margin: 0;
+}
+
+
+li{
+    list-style-type: none;    
+}
+
+a{
+    text-decoration: none;
+    color: green;
+}
+
+footer{
+    background-color: aliceblue;
+    color: green;
+    font-size: 15px;
+}
+
+body{
+    background: linear-gradient(90deg, rgba(249, 248, 247, 0.65), rgba(170, 170, 169, 0.65)), 
+    url('../img/fondo.jpeg');
+}
+
+ul li{
+    color: #4e025b !important;
+}
+
+#id_username_helptext, #id_password2_helptext{
+    color: #4e025b !important;
+}
