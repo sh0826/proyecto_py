@@ -54,7 +54,7 @@ ROOT_URLCONF = 'AgoraVibes.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['AgoraVibes/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
