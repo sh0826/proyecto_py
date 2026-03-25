@@ -10,9 +10,9 @@ class Evento(models.Model):
     imagen = models.ImageField(upload_to='EventoApp')
 
     class Meta:
-        db_name = 'evento'
-        verbose_name = 'Evento'
-        verbose_name_plural = 'Eventos'
+        db_table = "evento"
+        verbose_name = "Evento"
+        verbose_name_plural = "Eventos"
 
     def __str__(self):
-        return self.name
+        return self.nombre
