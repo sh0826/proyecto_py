@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'ProductoApp',
     'Detalle_VentaApp',
     'EventoApp',
-    'BoletaApp'
+    'BoletaApp',
+    'VentaApp',
 ]
 
 MIDDLEWARE = [
