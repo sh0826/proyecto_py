@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
 
     <title>Agora Vives Pub</title>
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -72,25 +73,25 @@
     <div class="container d-flex justify-content-between align-items-center">
 
         <div class="logo">
-            <a href="{% url 'home' %}">
+            <a href="{% url 'inicio' %}">
                 <img src="{% static 'img/logo1.svg' %}" alt="logo">
             </a>
         </div>
 
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Conócenos</a></li>
-                <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
-                <li><a href="{% url 'eventos' %}">Eventos</a></li>
+                <li><a href="{% url 'inicio' %}">Conócenos</a></li>
+                <li><a href="">Catálogo</a></li>
+                <li><a href="">Eventos</a></li>
 
                 #{% if user.is_authenticated %}
                     <li>{{ user.username }}</li>
                     <li>
-                        <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+                        <a href="">Cerrar sesión</a>
                     </li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
-                    <li><a href="{% url 'registrar' %}">Registrarse</a></li>
+                    <li><a href="">Iniciar sesión</a></li>
+                    <li><a href="">Registrarse</a></li>
                 {% endif %}
             </ul>
         </nav>
