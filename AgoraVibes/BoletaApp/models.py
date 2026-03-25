@@ -1,4 +1,4 @@
-'''from django.db import models
+from django.db import models
 from EventoApp.models import Evento
 from django.contrib.auth.models import User
 
@@ -13,7 +13,6 @@ class Boleta(models.Model):
         db_table = "boleta"
         verbose_name = "Boleta"
         verbose_name_plural = "Boletas"
-        ordering = ['id']
 
     def __str__(self):
-        return f'{self.usuario} / {self.evento}'''
+        return f"{self.usuario} / {self.evento}"
