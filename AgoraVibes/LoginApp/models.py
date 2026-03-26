@@ -1,0 +1,58 @@
+from django.db import models
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.conf import settings
+from django import forms
+
+# Create your models here.
+class UsuarioManager(BaseUserManager):
+
+    def crear_usuario(self, documento, nombre_completo, correo, tipo, password=None):
+        user = self.model(
+            documento=documento,
+            nombre_completo=nombre_completo,
+            correo=self.normalize_email(correo),
+            tipo=tipo,
+        )
+        user.set_password(password) # Esto cifra la contraseña (SHA256 por defecto)
+        user.save(using=self._db)
+        return user
+    
+    def crear_admin(self, documento, nombre_completo, correo, tipo, password=None):
+        user = self.crear_usuario(documento, nombre_completo, correo, tipo, password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
+class FormularioLogeo (forms.Form):
+    numero_documento = forms.IntegerField(label="Número de Documento")
+    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
+
+class Usuario(AbstractUser):
+    TIPOS = (
+        (1, 'Administrador'),
+        (2, 'Empleado'),
+        (3, 'Cliente'),
+    )
+
+
+    numero_documento = models.IntegerField(unique=True, primary_key=True)
+    tipo = models.IntegerField(default=3, choices=TIPOS)
+    nombre_completo = models.CharField(max_length=50)
+    correo = models.EmailField(max_length=30)
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False) # Reemplaza o complementa a is_admin
+    is_superuser = models.BooleanField(default=False)
+
+    objects = UsuarioManager()
+
+
+
+    USERNAME_FIELD = 'numero_documento'
+    REQUIRED_FIELDS = ['nombre_completo', 'correo', 'tipo']
+
+    def __str__(self):
+        return self.nombre_completo or f"Usuario {self.numero_documento}"
+
