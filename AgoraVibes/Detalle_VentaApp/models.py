@@ -9,9 +9,10 @@ class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cant_prod = models.IntegerField()
-    total = models.IntegerField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+
+    @property
+    def total(self):
+        return self.cant_prod * self.producto.precio_unitario
 
     class Meta:
         verbose_name = 'detalle venta'
@@ -27,5 +28,5 @@ class DetalleVenta(models.Model):
             self.producto.save()
         super().save(*args, **kwargs)
     def __str__(self):
-        return f"{self.producto}-{self.cant_prod}"
+        return f"{self.producto} - {self.venta}"
 
