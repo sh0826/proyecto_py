@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 class Venta(models.Model):
@@ -9,7 +9,7 @@ class Venta(models.Model):
         ('tarjeta', 'Tarjeta'),
         ('transferencia', 'Transferencia'),
     ]
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     medio_pago = models.CharField(max_length=20, choices=MEDIOS_PAGO)
     created_at = models.DateTimeField(auto_now_add=True)

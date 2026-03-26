@@ -37,20 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< Updated upstream
     'AgoraVibesApp',
     'ProductoApp',
     'Detalle_VentaApp',
     'EventoApp',
     'BoletaApp',
     'VentaApp',
-=======
     'crispy_forms',
     'crispy_bootstrap4',
-    'ProductoApp',
-    'Detalle_VentaApp',
     'LoginApp'
->>>>>>> Stashed changes
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
