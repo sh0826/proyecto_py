@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'EventoApp',
     'BoletaApp',
     'VentaApp',
+    'ReservacionApp',
     'crispy_forms',
     'crispy_bootstrap4',
-    'LoginApp'
+    'LoginApp',
+    'jazzmin'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
