@@ -1,33 +1,106 @@
-.barraNav{
-    background-color: aliceblue;
-    color: green;
+body {
+    background-color: #fff;
+    color: #000;
+}
+
+.logo img {
+    height: 200px;
+    object-fit: contain;
+    width: auto;
+} 
+.logo {
+    margin-left: 100px;
+}  
+.footer {
+    background-color: #000;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+    margin-top: 2rem;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    color: #ffcccc;
+}
+
+iframe {
+    width: 100%;
+    height: 250px;
+    border: none;
+    border-radius: 10px;
+}
+
+.img-bar {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+header {
+    background-color: #000;
+    padding: 1.5rem 0;
+    color: white;
+    height: 80px; /* altura fija del navbar */
+    display: flex;
+    align-items: center;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    gap: 130px;
+}
+
+nav {
+    margin-left: 40px;
+    display: flex;
+}
+
+nav a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #ffffff;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    color: rgb(226, 201, 6);
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+    position: relative;
+}
+
+nav a:hover {
+    color: #f01066;     
+}
+nav a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #c59d5f;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+nav ul {
+    list-style: none;
+    align-items: center;
     padding: 0;
     margin: 0;
-}
-
-
-li{
-    list-style-type: none;    
-}
-
-a{
-    text-decoration: none;
-    color: green;
-}
-
-footer{
-    background-color: aliceblue;
-    color: green;
-    font-size: 15px;
-}
-
-body{
-    background: linear-gradient(90deg, rgba(249, 248, 247, 0.65), rgba(170, 170, 169, 0.65)), 
-    url('../img/fondo.jpeg');
-}
-
-ul li{
-    color: #4e025b !important;
+    display: flex;
+    gap: 1.5rem;
 }
 
 #id_username_helptext, #id_password2_helptext{
