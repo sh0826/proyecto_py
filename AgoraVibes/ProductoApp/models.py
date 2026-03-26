@@ -10,7 +10,7 @@ class Producto (models.Model):
     ]
     UNIDAD_MD = [
         ('ml', "Ml"),
-        ('l', "L"),
+        ('l', "Litros"),
         ('paquete', 'Paquete'),
         ('medio', 'Medio'),
     ]
@@ -28,15 +28,8 @@ class Producto (models.Model):
         verbose_name = "producto"
         verbose_name_plural = "productos"
 
-    def clean(self):
-        if self.unidad_MD and not self.cantidad_MD:
-            raise ValidationError("Debe ingresar cantidad si hay unidad")
-        if self.cantidad_MD and not self.unidad_MD:
-            raise ValidationError("Debe ingresar unidad si hay cantidad")
-        
     def __str__(self):
-        if self.unidad_MD:
-            return f"{self.nombre} - {self.cantidad_MD}{self.unidad_MD}" 
-        else:
-            return self.nombre
+        if self.cantidad_MD and self.unidad_MD:
+            return f"{self.nombre} - {self.cantidad_MD}{self.unidad_MD}"
+        return f"{self.nombre} - {self.unidad_MD}"
            
