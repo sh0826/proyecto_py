@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 from ProductoApp.models import Producto
@@ -8,7 +9,6 @@ class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cant_prod = models.IntegerField()
-    stock = models.IntegerField()
     total = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

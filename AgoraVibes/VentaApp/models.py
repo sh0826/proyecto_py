@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,8 +14,9 @@ class Venta(models.Model):
     medio_pago = models.CharField(max_length=20, choices=MEDIOS_PAGO)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    """def total(self):
+""" def total(self):
         total = sum(d.total for d in self.detalleventa_set.all())
         return total"""
-    def __str__(self):
+def __str__(self):
         return f"Venta #{self.usuario}"
+
