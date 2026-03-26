@@ -37,13 +37,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< Updated upstream
     'AgoraVibesApp',
     'ProductoApp',
     'Detalle_VentaApp',
     'EventoApp',
     'BoletaApp',
     'VentaApp',
+=======
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'ProductoApp',
+    'Detalle_VentaApp',
+    'LoginApp'
+>>>>>>> Stashed changes
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,11 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'LoginApp.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-col'
 
 TIME_ZONE = 'UTC'
 

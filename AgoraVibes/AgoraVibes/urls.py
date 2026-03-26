@@ -20,8 +20,12 @@ from django.conf.urls.static import static
 from AgoraVibes import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< Updated upstream
     path('', include('AgoraVibesApp.urls')),
     
+=======
+    path('autenticar/', include('LoginApp.urls'))
+>>>>>>> Stashed changes
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

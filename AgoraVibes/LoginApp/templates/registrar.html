@@ -1,0 +1,15 @@
+{% block titulo %}Registro de Usuarios{% endblock %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="width: 30%; margin: auto;">
+    <h2 class="text-success mb-3">Registro de Usuarios</h2>
+    <form method="POST" action="">{% csrf_token %}
+        {{ form|crispy }}
+        <div align="center">
+            <button type="submit" class="btn btn-success mt-3 mb-3">Registrarse</button>
+        </div>        
+    </form>
+</div>
+{% endblock %}
