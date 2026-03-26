@@ -4,7 +4,6 @@ from AgoraVibes import settings
 
 # Create your models here.
 class reservacion(models.Model):
-    id_reservacion= models.AutoField(primary_key=True)
     user= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     cantidad_personas= models.IntegerField()
     cantidad_mesas= models.IntegerField()

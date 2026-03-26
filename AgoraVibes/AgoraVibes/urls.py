@@ -21,7 +21,9 @@ from AgoraVibes import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('AgoraVibesApp.urls')),
-    path('autenticar/', include('LoginApp.urls'))
+    path('autenticar/', include('LoginApp.urls')),
+    path('reservacion/',include('ReservacionApp.urls'))
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
