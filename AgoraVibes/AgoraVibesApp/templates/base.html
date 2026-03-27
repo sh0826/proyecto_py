@@ -25,14 +25,15 @@
           <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
           <li><a href="">Eventos</a></li>
 
-          {% if user.is_authenticated %}Hola:
-            <li>{{ user.username }}</li>
+          {% if user.is_authenticated %}
             <li>
-              <a href="">Cerrar sesión</a>
+              <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+              <li>{{ user.nombre_completo }}</li>
             </li>
           {% else %}
             <li><a href="{%url 'login'%}">Iniciar sesión</a></li>
             <li><a href="{%url 'registro'%}">Registrarse</a></li>
+
           {% endif %}
         </ul>
       </nav>
