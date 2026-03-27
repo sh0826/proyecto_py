@@ -3,14 +3,17 @@ from . import models
 from .forms import ReservacionForm
 # Create your views here.
 def reservacion(request):
-    reservaciones=models.reservacion.objects.all()
-    return render(request,'reservacion.html',{'reservacion':reservaciones})
+    reservaciones=models.Reservacion.objects.all()
+    return render(request,'reservacion.html',{'reservaciones':reservaciones})
 def crear_reserva(request):
     if request.method == "POST":
         form = ReservacionForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("reservas") 
+            reservaciones = form.save(commit=False) 
+            reservaciones.user=request.user
+            reservaciones.save()
+            
+            return redirect("reservacion") 
     else:
         form = ReservacionForm()
 

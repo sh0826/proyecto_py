@@ -3,7 +3,7 @@ from django.db import models
 from AgoraVibes import settings
 
 # Create your models here.
-class reservacion(models.Model):
+class Reservacion(models.Model):
     user= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     cantidad_personas= models.IntegerField()
     cantidad_mesas= models.IntegerField()

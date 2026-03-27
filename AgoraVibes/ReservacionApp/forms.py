@@ -1,19 +1,20 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from .models import reservacion
+from .models import Reservacion
 
 class ReservacionForm(forms.ModelForm):
     class Meta:
-        model = reservacion
+        model = Reservacion
         fields = ['cantidad_personas', 'cantidad_mesas', 'fecha_reservacion', 'ocasion']
 
         widgets = {
+             
             'cantidad_personas': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Cantidad de personas',
                 'min': 1,       # mínimo 1 persona
-                'max': 44       # máximo 44 personas
+                'max': 2       # máximo 44 personas
             }),
             'cantidad_mesas': forms.NumberInput(attrs={
                 'class': 'form-control',
@@ -40,9 +41,6 @@ class ReservacionForm(forms.ModelForm):
 
         # Validar que personas > mesas
         if personas is not None and mesas is not None:
-            if personas <= mesas:
-                raise ValidationError("La cantidad de personas debe ser mayor que la cantidad de mesas.")
-
             if personas > 44:
                 raise ValidationError("No se pueden reservar más de 44 personas.")
 

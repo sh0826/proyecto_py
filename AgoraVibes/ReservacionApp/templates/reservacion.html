@@ -27,14 +27,14 @@
                 </thead>
 
                 <tbody>
-                    {% for reserva in reservaciones %}
+                    {% for reservaciones in reservaciones %}
                     <tr>
-                        <td>{{ reserva.cantidad_personas }}</td>
-                        <td>{{ reserva.cantidad_mesas }}</td>
-                        <td>{{ reserva.fecha_reservacion }}</td>
+                        <td>{{ reservaciones.cantidad_personas }}</td>
+                        <td>{{ reservaciones.cantidad_mesas }}</td>
+                        <td>{{ reservaciones.fecha_reservacion }}</td>
                         <td>
                             <span class="badge bg-info text-dark">
-                                {{ reserva.ocasion }}
+                                {{ reservaciones.ocasion }}
                             </span>
                         </td>
                         <td>
