@@ -22,7 +22,7 @@
       <nav>
         <ul>
           <li><a href="{% url 'inicio' %}">Conócenos</a></li>
-          <li><a href="">Catálogo</a></li>
+          <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
           <li><a href="">Eventos</a></li>
 
           {% if user.is_authenticated %}Hola:
