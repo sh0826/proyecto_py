@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% block titulo %}Ingreso de Usuarios{% endblock %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -14,6 +15,7 @@
         {% endif %}
         <div align="center">
             <button type="submit" class="btn btn-success mt-3 mb-3">Iniciar Sesión</button><br>
+            <a href="{% url 'recuperar' %}" class="text-danger mb-2 fw-bold">Olvidé mi Contraseña</a>
         </div>        
     </form>
 </div>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block titulo %}Recuperar Contraseña{% endblock %}
+
+{% block content %}
+<div style="width: 30%; margin: auto;">
+<form action="" method="POST">{% csrf_token %}
+    <h3 class="text-primary text-center">Recuperar Contraseña</h3>
+    <label for="correo">Correo del Usuario:</label>
+    <input type="email" name="correo" id="correo" class="form-control" required>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+    </div><br>
+</form>
+</div>
+{% if ok == 1 %}
+    <h6 class="text-center text-success">{{ msj }}</h6>
+    <h6 class="text-center text-success">Por favor revise la Bandeja de Entrada de su Correo</h6>
+{% else %}
+    <h6 class="text-center text-danger">{{ msj }}</h6>
+{% endif %}
+<br>
+{% endblock %}

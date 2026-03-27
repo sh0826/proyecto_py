@@ -1,5 +1,6 @@
 body {
-    background-color: #fff;
+        background-color: #ffffff;
+
     color: #000;
 }
 
@@ -9,13 +10,13 @@ body {
     width: auto;
 } 
 .logo {
-    margin-left: 100px;
+    margin-left: 20px;
 }  
 .footer {
     background-color: #000;
     padding: 1rem;
     text-align: center;
-    color: white;
+    color: rgb(255, 255, 255);
     margin-top: 2rem;
 }
 
@@ -42,10 +43,10 @@ iframe {
 }
 
 header {
-    background-color: #000;
+    background: #000;
     padding: 1.5rem 0;
     color: white;
-    height: 80px; /* altura fija del navbar */
+    height: 80px;
     display: flex;
     align-items: center;
 }
@@ -54,12 +55,12 @@ header .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 10px;
     gap: 130px;
 }
 
 nav {
-    margin-left: 40px;
+    margin-left: 50px;
     display: flex;
 }
 
@@ -70,10 +71,10 @@ nav a {
     color: #ffffff;
     opacity: 0.8;
     transition: all 0.3s ease;
-    color: rgb(226, 201, 6);
+    color: rgb(228, 231, 176);
     text-decoration: none;
     font-weight: bold;
-    margin-left: 15px;
+    margin-left: 5px;
     position: relative;
 }
 
@@ -105,4 +106,30 @@ nav ul {
 
 #id_username_helptext, #id_password2_helptext{
     color: #4e025b !important;
+}
+.card-info {
+    background: #1a1a1a;
+    color: #f5f5f5;
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(197,157,95,0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+      font-family: "Caveat", cursive;
+}
+
+.card-info:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(253, 7, 7, 0.6);
+    border: 1px solid #c59d5f;
+}
+
+.card-info h2 {
+    color: rgb(228, 231, 176);
+    letter-spacing: 1px;
+    font-family: "Bangers", system-ui;
+}
+
+.card-info p{
+     font-family: "Patrick Hand SC", cursive;
 }

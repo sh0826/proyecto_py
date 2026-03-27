@@ -43,9 +43,13 @@ INSTALLED_APPS = [
     'EventoApp',
     'BoletaApp',
     'VentaApp',
+    'ReservacionApp',
     'crispy_forms',
     'crispy_bootstrap4',
-    'LoginApp'
+    'LoginApp',
+    'widget_tweaks',
+    'jazzmin',
+    'MiAPI'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -132,3 +136,10 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = 'AgoraVibes/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # Ejemplo con Gmail
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'march.jim.05@gmail.com'
+EMAIL_HOST_PASSWORD = 'vrzl mnqy jdds lgkv'

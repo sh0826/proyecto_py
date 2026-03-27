@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block titulo %}Catalogo{% endblock %}
+{% load static %}
+{% block content %}
+
+{% for dato in datos.drinks %}
+ {{ dato.strDrink }}
+{% endfor %}
+{% endblock%}
