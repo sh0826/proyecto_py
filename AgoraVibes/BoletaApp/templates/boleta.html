@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block titulo %}Boletas{% endblock %}
+{% load static %}
+
+{% block content %}
+<h1 class="text-primary text-center">Listado de Boletas</h1>
+<div class=" container mt-4">    
+
+    <table class="table table-light table-bordered">
+        <thead>
+            <tr align="center">
+                <th>Nombre</th>
+                <th>Precio Boleta</th>
+                <th>Cantidad de Boletos</th>
+                <th>Evento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in boletas %}
+                <tr>
+                    <td>{{ b.usuario}} </td>
+                    <td>{{ b.precio_boleta}}</td>
+                    <td>{{ b.cantidad_boletos}}</td>
+                    <td>{{ b.evento}}</td>
+                </tr>
+            {% empty %}
+                <tr align="center">
+                    <td colspan="6"><h4 class="text-danger">No hay boletas</h4></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

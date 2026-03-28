@@ -5,7 +5,7 @@ import requests
 def catalogo(request):
     url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka'
     response = requests.get(url)
-    
+    data = []
     if response.status_code == 200:
         data = response.json()
     else:
