@@ -24,7 +24,8 @@ urlpatterns = [
     path('autenticar/', include('LoginApp.urls')),
     path('reservacion/',include('ReservacionApp.urls')),
     path('catalogo/',include('MiAPI.urls')),
-    path('boleta/',include('BoletaApp.urls'))
+    path('boleta/',include('BoletaApp.urls')),
+    path('eventos/',include('EventoApp.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

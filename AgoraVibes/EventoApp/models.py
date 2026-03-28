@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import Sum
+from django.core.exceptions import ValidationError
+from datetime import date
 # Create your models here.
 class Evento(models.Model):
     nombre = models.CharField(max_length=100)
@@ -8,6 +11,16 @@ class Evento(models.Model):
     hora_inicio = models.TimeField()
     precio_boleta = models.IntegerField()
     imagen = models.ImageField(upload_to='EventoApp')
+
+    def cupos_disponibles(self):
+        total = self.boleta_set.aggregate(
+            total=Sum('cantidad_boletos')
+        )['total'] or 0
+        return self.capacidad_maxima - total
+
+    def clean(self):
+        if self.fecha < date.today():
+            raise ValidationError("No puedes elegir fechas anterior a la de hoy ")
 
     class Meta:
         db_table = "evento"

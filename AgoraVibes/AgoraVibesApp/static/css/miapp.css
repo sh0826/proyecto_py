@@ -133,3 +133,7 @@ nav ul {
 .card-info p{
     font-family: "Patrick Hand SC", cursive;
 }
+
+.asteriskField {
+    display: none;
+}
