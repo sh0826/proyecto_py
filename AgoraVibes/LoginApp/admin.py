@@ -5,6 +5,9 @@ from django import forms
 from .models import Usuario
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
+from import_export.admin import ExportActionMixin
+from import_export import resources
+from AgoraVibes.ExportResource import CustomExportResource
 
 
 class UsuarioCreationForm(forms.ModelForm):
@@ -41,7 +44,29 @@ class UsuarioChangeForm(forms.ModelForm):
         model = Usuario
         fields = ('numero_documento', 'nombre_completo', 'correo', 'tipo', 'password', 'is_active', 'is_staff', 'is_superuser')
 
-class UsuarioAdmin(BaseUserAdmin):
+class UsuarioResource(CustomExportResource):
+    class Meta:
+        model = Usuario
+        # Aquí eliges SOLO los campos que quieres que aparezcan
+        fields = (
+            'numero_documento', 
+            'nombre_completo', 
+            'correo', 
+            'tipo', 
+            'is_active', 
+            'date_joined'
+        )
+        # Opcional: define el orden de las columnas en el Excel/Reporte
+        export_order = ('numero_documento', 'nombre_completo', 'correo', 'tipo')
+
+
+class UsuarioAdmin(ExportActionMixin, BaseUserAdmin):
+
+    class Media:
+        js = ('js/custom.js',)
+
+
+    resource_class = UsuarioResource
     form = UsuarioChangeForm
     add_form = UsuarioCreationForm
 
@@ -62,9 +87,12 @@ class UsuarioAdmin(BaseUserAdmin):
         }),
     )
 
-    search_fields = ('numero_documento', 'nombre_completo', 'correo')
+    search_fields = ('numero_documento', 'nombre_completo', 'correo')    
+    search_help_text = "Número de documento, nombre completo o correo electrónico."
     ordering = ('numero_documento',)
     filter_horizontal = ()
+
+
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.unregister(Group)
