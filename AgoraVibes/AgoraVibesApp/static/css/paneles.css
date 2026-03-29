@@ -44,7 +44,14 @@ th a {
     text-align: center;
 }
 
-.export_link.btn-secondary {
+/* Escondemos globalmente cualquier rastro de botones de exportar (Listas y Formularios) */
+.export_link,
+.import_link,
+.btn-secondary.export_link,
+[class*="default"],
+[name="_export-item"],
+a[href*="export"],
+li > a[href*="export"] {
     display: none !important;
 }
 
@@ -172,4 +179,13 @@ th a {
 .clear-filters-btn:hover {
     color: #fff !important;
     transform: rotate(90deg) scale(1.2);
+}
+
+input[name="_export-item"] {
+    display: none !important;
+}
+
+/* Si también quieres ocultar el contenedor que lo rodea (opcional) */
+.submit-row:has(input[name="_export-item"]) {
+    display: none !important;
 }

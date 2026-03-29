@@ -4,71 +4,61 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static '/css/miapp.css' %}">
-<h1 class="text-dark text-center" style="font-family: Rubik Dirt, system-ui;">Tus Boletas</h1>
-<div class=" container mt-5">    
-    <table class="table table-light table-bordered">
-        {% if request.user.tipo == 3 %}
-            <a href="{% url 'crear' %}" class="btn btn-danger mb-3">Nueva Boleta</a>
-        {% endif %}
-        <p>Verifica los cupos: </p>
-        <select name="evento" class="form-select">
-            {% for evento in eventos %}
-                <option value="{{ evento.id }}">
-                    {{ evento.nombre }} - Cupos: {{ evento.cupos_disponibles }}
-                </option>
-            {% endfor %}
-        </select>
-        <br>
-        <p>Busca por: </p>
-        <form method="get" class="mb-4">
-            <div class="d-flex gap-2">
-                <select name="evento" class="form-select flex-grow-1">
-                    <option value="">Todos</option>
-                    {% for evento in eventos %}
-                        <option value="{{ evento.id }}"
-                        {% if request.GET.evento == evento.id|stringformat:"s" %}selected{% endif %}>{{ evento.nombre }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="number" name="cantidad" class="form-control flex-grow-1"placeholder="Cantidad" value="{{ request.GET.cantidad }}">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-                <a href="{% url 'listar' %}" class="btn btn-danger">Limpiar</a>
+<h1 class="text-dark text-center" style="font-family: 'Rubik Dirt', system-ui;">🎟️ Tus Boletas</h1>
+
+
+
+<div class="container mt-5">    
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            
+            {% if request.user.tipo == 3 %}
+                {% for e in eventos %}
+                    {% if e.cupos_disponibles > 0 %}
+                        <a href="{% url 'crear' %}" class="btn btn-danger mb-3">Apartar Boleta/s</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table align-middle text-center mb-0 table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Evento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in boletas %}
+                        <tr>
+                            <td>{{ b.usuario }}</td>
+                            <td><span class="badge bg-danger text-dark">${{ b.precio_boleta }}</span></td>
+                            <td>{{ b.cantidad_boletos }}</td>
+                            <td><strong>{{ b.evento }}</strong></td>
+                            <td>
+                                {% if request.user.tipo == 3 %}
+                                <a href="{% url 'actualizar' b.id %}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{% url 'eliminar' b.id %}" onclick="return confirm('¿Seguro que desea eliminar esta boleta?')" class="btn btn-sm btn-secondary">Eliminar</a>
+                                {% else %}
+                                <span class="badge bg-secondary">Solo lectura</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-danger mb-0">No hay boletas registradas</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </form>
-        <br>
-        <thead>
-            <tr align="center">
-                <th>Nombre</th>
-                <th>Precio Boleta</th>
-                <th>Cantidad de Boletos</th>
-                <th>Evento</th>
-                
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for b in boletas %}
-                <tr>
-                    <td>{{ b.usuario}} </td>
-                    <td>{{ b.precio_boleta}}</td>
-                    <td>{{ b.cantidad_boletos}}</td>
-                    <td>{{ b.evento}}</td>
-                    <td align="center">
-                        {% if request.user.tipo == 3 %}
-                        <a href="{% url 'actualizar' b.id %}" class="btn btn-warning">Editar</a>
-                        <a href="{% url 'eliminar' b.id %}" onclick="return confirm('¿Seguro que desea eliminar esta boleta?')" class="btn btn-secondary">Eliminar</a>
-                        {% else %}
-                            Solo lectura
-                        {% endif %}
-                        <a href="{% url 'boleta_pdf' b.id %}" class="btn btn-danger">Descargar PDF</a>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr align="center">
-                    <td colspan="6"><h4 class="text-danger">No hay boletas</h4></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+        </div>
+    </div>
 </div>
 {% endblock %}

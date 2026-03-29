@@ -4,6 +4,68 @@ body {
     color: #000;
 }
 
+.dashboard-client {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 50px;
+    border: 1px solid #b7a607;
+    box-shadow: 0 0 20px rgba(183, 166, 7, 0.3);
+}
+.dashboard-title {
+    font-family: 'Bangers', cursive;
+    color: #b7a607;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 30px;
+}
+
+.card-dashboard {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #444;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+}
+.card-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(183, 166, 7, 0.4);
+    border-color: #b7a607;
+}
+.card-header-client {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 2px solid #b7a607;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.item-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.item-list::-webkit-scrollbar {
+    width: 5px;
+}
+.item-list::-webkit-scrollbar-thumb {
+    background: #b7a607;
+    border-radius: 10px;
+}
+.item-row {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    color: #ddd;
+}
+.item-row:last-child {
+    border-bottom: none;
+}
+
+
 .logo img {
     height: 200px;
     object-fit: contain;
@@ -71,7 +133,7 @@ nav a {
     color: #ffffff;
     opacity: 0.8;
     transition: all 0.3s ease;
-    color: rgb(255, 255, 255);
+    color: rgb(228, 231, 176);
     text-decoration: none;
     font-weight: bold;
     margin-left: 5px;
@@ -137,3 +199,4 @@ nav ul {
 .asteriskField {
     display: none;
 }
+
