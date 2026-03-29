@@ -4,10 +4,10 @@ from django.core.exceptions import ValidationError
 from datetime import date
 # Create your models here.
 class Evento(models.Model):
-    nombre = models.CharField(max_length=100)
-    capacidad_maxima = models.IntegerField()
+    nombre = models.CharField(max_length=100, verbose_name='Nombre')
+    capacidad_maxima = models.IntegerField(verbose_name='Capacidad Máxima')
     descripcion = models.CharField(max_length=50)
-    fecha = models.DateField()
+    fecha = models.DateField(verbose_name='Fecha')
     hora_inicio = models.TimeField(verbose_name='Hora de Inicio')
     precio_boleta = models.IntegerField(verbose_name='Precio de Boleta')
     imagen = models.ImageField(upload_to='EventoApp')

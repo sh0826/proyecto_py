@@ -39,3 +39,137 @@ body.theme-lux select {
     color: white;
     opacity: none !important ;
 }
+
+th a {
+    text-align: center;
+}
+
+.export_link.btn-secondary {
+    display: none !important;
+}
+
+/* ─── Barra de Búsqueda ─────────────────────────────────── */
+#changelist-search {
+    background: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    padding: 14px 18px !important;
+    margin-bottom: 16px !important;
+    width: 50% !important;
+    box-sizing: border-box !important;
+}
+
+#changelist-search form,
+#changelist-search p {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+#changelist-search input[type="text"] {
+    border-radius: 6px !important;
+    border: 1px solid #ced4da !important;
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s !important;
+}
+
+#changelist-search input[type="text"]:focus {
+    outline: none !important;
+    border-color: #b7a607 !important;
+    box-shadow: 0 0 0 3px rgba(183, 166, 7, 0.15) !important;
+}
+
+/* Texto de ayuda debajo del search */
+.help {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+    font-style: italic;
+}
+
+/* ─── Panel de Filtros Lateral ───────────────────────────── */
+#changelist-filter {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+#changelist-filter h2 {
+    background: #2d3035;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 16px;
+    margin: 0;
+}
+
+#changelist-filter h3 {
+    color: #495057;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 16px 4px;
+    margin: 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+#changelist-filter ul {
+    list-style: none;
+    padding: 4px 0 8px;
+    margin: 0;
+}
+
+#changelist-filter ul li {
+    padding: 3px 16px;
+}
+
+#changelist-filter ul li a {
+    width: 100%;
+    color: #495057;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: block;
+    border-radius: 4px;
+    padding: 3px 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+#changelist-filter ul li a:hover {
+    background: #f8f9fa;
+    color: #b7a607;
+}
+
+#changelist-filter ul li.selected a {
+    font-weight: 600;
+    color: #b7a607;
+    background: rgba(183, 166, 7, 0.08);
+    border-left: 3px solid #b7a607;
+    padding-left: 9px;
+}
+
+/* Botón Limpiar Filtros */
+.clear-filters-btn {
+    color: #ffc107 !important;
+    font-size: 1rem !important;
+    transition: transform 0.2s ease, color 0.2s ease;
+    text-decoration: none !important;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.clear-filters-btn:hover {
+    color: #fff !important;
+    transform: rotate(90deg) scale(1.2);
+}

@@ -50,12 +50,14 @@ INSTALLED_APPS = [
     'LoginApp',
     'widget_tweaks',
     'MiAPI',
-    
+    'import_export'
 ]
 
 JAZZMIN_SETTINGS = {
     "custom_css": "css/paneles.css",
-    "site_logo": None
+    "custom_js": "js/paneles.js",
+    "site_logo": None,
+    "site_icon": None
 }
 
 JAZZMIN_UI_TWEAKS = {
@@ -153,3 +155,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'march.jim.05@gmail.com'
 EMAIL_HOST_PASSWORD = 'vrzl mnqy jdds lgkv'
+
+# Opciones de import/export
+from import_export.formats.base_formats import XLSX
+from AgoraVibes.ExportFormat import PDFFormat
+
+IMPORT_EXPORT_FORMATS = [XLSX, PDFFormat]
