@@ -180,3 +180,12 @@ li > a[href*="export"] {
     color: #fff !important;
     transform: rotate(90deg) scale(1.2);
 }
+
+input[name="_export-item"] {
+    display: none !important;
+}
+
+/* Si también quieres ocultar el contenedor que lo rodea (opcional) */
+.submit-row:has(input[name="_export-item"]) {
+    display: none !important;
+}
