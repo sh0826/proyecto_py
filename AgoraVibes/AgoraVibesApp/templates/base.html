@@ -32,6 +32,7 @@
           <li><a href="{% url 'eventos'%}">Eventos</a></li>
           {% if request.user.tipo == 3 %}
               <a href="{% url 'lista' %}">Boletas</a>
+              <a href="{% url 'reservacion' %}">Reservaciones</a>
           {% endif %}
           {% if user.is_authenticated %}
             <li>

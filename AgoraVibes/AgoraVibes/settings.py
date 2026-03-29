@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'LoginApp',
     'widget_tweaks',
-    'jazzmin',
     'MiAPI',
     
 ]

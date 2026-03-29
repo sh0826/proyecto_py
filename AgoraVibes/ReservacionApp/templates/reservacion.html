@@ -4,37 +4,57 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container mt-5">
-{% if user.tipo == 3 %}
+<style>
+/* 🎨 Hover rojo-violeta */
+.table-hover tbody tr {
+    transition: all 0.2s ease-in-out;
+}
 
+.table-hover tbody tr:hover {
+    background: linear-gradient(90deg, #8B0000, #6a0dad);
+    color: white;
+    transform: scale(1.01);
+}
+
+/* 🔥 Botones más brillantes al pasar mouse */
+.table-hover tbody tr:hover .btn {
+    filter: brightness(1.2);
+}
+</style>
+
+<div class="container mt-5">
+
+{% if user.tipo == 3 %}
 <h1 class="text-center mb-4">📅 Tus reservaciones</h1>
- {% endif %} 
+{% endif %} 
+
 {% if user.tipo == 1 or user.tipo == 2 %}
 <h1 class="text-center mb-4">📅 Reservaciones de clientes</h1>
-
-    
-
 {% endif %}
+
 <div class="card shadow-lg border-0">
     <div class="card-body">
 
+        {% if user.tipo == 3 %}
+        <a href="{% url "crear_reseva" %}" class="btn btn-sm btn-danger mb-3">
+            Nueva reservación
+        </a>
+        {% endif %}
+
         <div class="table-responsive">
-            <table class="table table-hover align-middle text-center">
-               {% if user.tipo == 3 %}
-                <a href="{% url "crear_reseva" %}" class="btn btn-sm btn-primary ">Nueva reservacion</a>
-                {% endif %}
+            <table class="table table-hover align-middle text-center mb-0 table-bordered">
+                
                 <thead class="table-dark">
                     <tr>
                         {% if user.tipo == 1 or user.tipo == 2 %}
-                        <th> Cliente</th>
+                        <th>Cliente</th>
                         {% endif %}
                         
-                        <th>👥 Personas</th>
-                        <th>🪑 Mesas</th>
-                        <th>📅 Fecha</th>
-                        <th>🎉 Ocasión</th>
-                        <th>⚙️ Acciones</th>
-                        
+                        <th>Personas</th>
+                        <th>Mesas</th>
+                        <th>Fecha</th>
+                        <th>Ocasión</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -49,7 +69,7 @@
                         <td>{{ reservaciones.cantidad_mesas }}</td>
                         <td>{{ reservaciones.fecha_reservacion }}</td>
                         <td>
-                            <span class="badge bg-info text-dark">
+                            <span class="badge bg-danger text-dark">
                                 {{ reservaciones.ocasion }}
                             </span>
                         </td>
@@ -58,10 +78,12 @@
                         {% if user.tipo == 3 %}
                             <a href="{% url 'editar_reserva' reservaciones.id %}" class="btn btn-sm btn-warning">Editar</a>
                         {% endif %}
+
                             <a href="{% url 'eliminar_reserva' reservaciones.id %}" class="btn btn-sm btn-danger">Eliminar</a>
                         
                         </td>
                     </tr>
+
                     {% empty %}
                     <tr>
                         <td colspan="5">
@@ -78,7 +100,6 @@
 
     </div>
 </div>
-```
 
 </div>
 

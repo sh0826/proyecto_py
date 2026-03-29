@@ -3,7 +3,7 @@ from . import models
 from .forms import ReservacionForm
 # Create your views here.
 def reservacion(request):
-    reservaciones=models.Reservacion.objects.all()
+    reservaciones=models.Reservacion.objects.filter(user=request.user)
     
     return render(request,'reservacion.html',{'reservaciones':reservaciones})
 def crear_reserva(request):
@@ -23,6 +23,8 @@ def crear_reserva(request):
 def editar_reserva(request, id):
     reservacion = get_object_or_404(models.Reservacion, id=id)
 
+    if reservacion.user != request.user:
+            return redirect("reservacion")
     if request.method == "POST":
         form = ReservacionForm(request.POST, instance=reservacion)
         if form.is_valid():
@@ -34,7 +36,8 @@ def editar_reserva(request, id):
     return render(request, "editar_reserva.html", {"form": form})
 def eliminar_reserva(request, id):
     reservacion = get_object_or_404(models.Reservacion, id=id)
-
+    if reservacion.user != request.user:
+            return redirect("reservacion")
     if request.method == "POST":
         reservacion.delete()
         return redirect("reservacion")
