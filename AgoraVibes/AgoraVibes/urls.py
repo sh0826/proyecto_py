@@ -18,13 +18,26 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from AgoraVibes import settings
+from AgoraVibes.admin_empleado import empleado_admin_site
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def custom_admin_logout(request, extra_context=None):
+    logout(request)
+    return redirect('/')
+
+admin.site.logout = custom_admin_logout
+empleado_admin_site.logout = custom_admin_logout
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('panel_empleado/', empleado_admin_site.urls),
     path('', include('AgoraVibesApp.urls')),
     path('autenticar/', include('LoginApp.urls')),
     path('reservacion/',include('ReservacionApp.urls')),
     path('catalogo/',include('MiAPI.urls')),
-    path('boleta/',include('BoletaApp.urls'))
+    path('boleta/',include('BoletaApp.urls')),
+    path('eventos/',include('EventoApp.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

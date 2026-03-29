@@ -10,6 +10,12 @@
   <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
   <link rel="stylesheet" href="{% static '/css/miapp.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1979&family=Nabla&family=Press+Start+2P&family=Rubik+Dirt&family=Syne+Mono&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Climate+Crisis:YEAR@1979&family=Nabla&family=Press+Start+2P&family=Rubik+Dirt&family=Saira+Stencil+One&family=Syne+Mono&family=Vast+Shadow&display=swap" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
   <header class="container-fluid">
@@ -23,8 +29,10 @@
         <ul>
           <li><a href="{% url 'inicio' %}">Conócenos</a></li>
           <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
-          <li><a href="">Eventos</a></li>
-
+          <li><a href="{% url 'eventos'%}">Eventos</a></li>
+          {% if request.user.tipo == 3 %}
+              <a href="{% url 'lista' %}">Boletas</a>
+          {% endif %}
           {% if user.is_authenticated %}
             <li>
               <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>

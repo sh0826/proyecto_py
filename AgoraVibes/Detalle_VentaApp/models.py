@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cant_prod = models.IntegerField()
+    cant_prod = models.IntegerField(verbose_name='Cantidad de Producto')
 
     @property
     def total(self):
@@ -23,9 +23,14 @@ class DetalleVenta(models.Model):
             raise ValidationError("No hay suficiente cantidad del producto")
         
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if self.pk:
+            detalleAnterior = DetalleVenta.objects.get(pk=self.pk)
+            diferencia = self.cant_prod - detalleAnterior.cant_prod
+            self.producto.stock -= diferencia
+        else:
             self.producto.stock -= self.cant_prod
-            self.producto.save()
+
+        self.producto.save()
         super().save(*args, **kwargs)
     def __str__(self):
         return f"{self.producto} - {self.venta}"

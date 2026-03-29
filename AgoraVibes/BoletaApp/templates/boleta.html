@@ -3,16 +3,30 @@
 {% load static %}
 
 {% block content %}
-<h1 class="text-primary text-center">Listado de Boletas</h1>
-<div class=" container mt-4">    
+<link rel="stylesheet" href="{% static '/css/miapp.css' %}">
+<h1 class="text-dark text-center" style="font-family: Rubik Dirt, system-ui;">Tus Boletas</h1>
+<div class=" container mt-5">    
 
     <table class="table table-light table-bordered">
+        {% if request.user.tipo == 3 %}
+            {% for e in eventos %}
+                {% if e.cupos_disponibles > 0 %}
+                    <a href="{% url 'crear' %}" class="btn btn-danger mb-2">Nueva Boleta</a>
+                {% else %}
+                    <button class="btn btn-secondary mb-2" disabled>
+                        Agotado
+                    </button>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         <thead>
             <tr align="center">
                 <th>Nombre</th>
                 <th>Precio Boleta</th>
                 <th>Cantidad de Boletos</th>
                 <th>Evento</th>
+                
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +36,14 @@
                     <td>{{ b.precio_boleta}}</td>
                     <td>{{ b.cantidad_boletos}}</td>
                     <td>{{ b.evento}}</td>
+                    <td align="center">
+                        {% if request.user.tipo == 3 %}
+                        <a href="{% url 'actualizar' b.id %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminar' b.id %}" onclick="return confirm('¿Seguro que desea eliminar esta boleta?')" class="btn btn-secondary">Eliminar</a>
+                        {% else %}
+                            Solo lectura
+                        {% endif %}
+                    </td>
                 </tr>
             {% empty %}
                 <tr align="center">

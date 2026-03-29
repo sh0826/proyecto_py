@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+{% block titulo %}Eventos{% endblock %}
+{% load static %}
+{% block content %}
+<h1 class="text-dark text-center" style="font-family: Rubik Dirt, system-ui;">Eventos programados</h1>
+<div class="conteiner row">
+    {% for e in eventos %}
+        <div class="col-md-3">
+            <div class="card rounded mt-3 bg-dark">
+                <img src="{{ e.imagen.url }}" alt="{{ e.nombre }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title text-white" style="font-family: Black Ops One, system-ui;" > {{ e.nombre }}</h5>
+                    <h4 class="text-warning card-subtitle mb-2 fw-bold " style="font-family: Saira Stencil One, sans-serif;">Precio $ {{ e.precio_boleta}}</h4>
+                    <p class="card-text text-white">{{e.descripcion}}</p>
+                    {% if e.cupos_disponibles > 0 %}
+                        <p class="text-dark">
+                         Cupos disponibles: {{ e.cupos_disponibles}}
+                        </p>
+                    {% else %}
+                        <p class="text-danger fw-bold">
+                            AGOTADO
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <h3 class="text-danger text-center">No hay eventos</h3>
+    {% endfor %}
+</div>
+{% endblock %}

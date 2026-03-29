@@ -71,7 +71,11 @@ nav a {
     color: #ffffff;
     opacity: 0.8;
     transition: all 0.3s ease;
+<<<<<<< Updated upstream
     color: rgb(228, 231, 176);
+=======
+    color: rgb(255, 255, 255);
+>>>>>>> Stashed changes
     text-decoration: none;
     font-weight: bold;
     margin-left: 5px;
@@ -120,7 +124,7 @@ nav ul {
 
 .card-info:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(253, 7, 7, 0.6);
+    box-shadow: 0 15px 30px #fd070799;
     border: 1px solid #c59d5f;
 }
 
@@ -132,4 +136,8 @@ nav ul {
 
 .card-info p{
     font-family: "Patrick Hand SC", cursive;
+}
+
+.asteriskField {
+    display: none;
 }
