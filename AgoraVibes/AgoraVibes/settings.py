@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'LoginApp',
     'widget_tweaks',
     'jazzmin',
-    'MiAPI'
+    'MiAPI',
+    'requests'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

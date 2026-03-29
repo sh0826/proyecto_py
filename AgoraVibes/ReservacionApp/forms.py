@@ -9,29 +9,37 @@ class ReservacionForm(forms.ModelForm):
         fields = ['cantidad_personas', 'cantidad_mesas', 'fecha_reservacion', 'ocasion']
 
         widgets = {
-             
             'cantidad_personas': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Cantidad de personas',
-                'min': 1,       # mínimo 1 persona
-                'max': 2       # máximo 44 personas
+                'min': 1,
+                'max': 44
             }),
             'cantidad_mesas': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Cantidad de mesas',
-                'min': 1,       # mínimo 1 mesa
-                'max': 11       # máximo 11 mesas
+                'min': 1,
+                'max': 11
             }),
-            'fecha_reservacion': forms.DateInput(attrs={
-                'class': 'form-control',
-                'type': 'date',
-                'min': timezone.now().date().strftime('%Y-%m-%d')
-            }),
+            'fecha_reservacion': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'date',
+                    'min': timezone.now().date().strftime('%Y-%m-%d')
+                },
+                format='%Y-%m-%d'
+            ),
             'ocasion': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Ej: Cumpleaños'
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # <- todo aquí dentro
+        if self.instance and self.instance.fecha_reservacion:
+            self.initial['fecha_reservacion'] = self.instance.fecha_reservacion.strftime('%Y-%m-%d')
 
     def clean(self):
         cleaned_data = super().clean()
@@ -39,15 +47,12 @@ class ReservacionForm(forms.ModelForm):
         mesas = cleaned_data.get('cantidad_mesas')
         fecha = cleaned_data.get('fecha_reservacion')
 
-        # Validar que personas > mesas
         if personas is not None and mesas is not None:
             if personas > 44:
                 raise ValidationError("No se pueden reservar más de 44 personas.")
-
             if mesas > 11:
                 raise ValidationError("No se pueden reservar más de 11 mesas.")
 
-        # Validar que la fecha no sea pasada
         if fecha is not None:
             hoy = timezone.now().date()
             if fecha < hoy:

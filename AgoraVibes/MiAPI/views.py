@@ -1,6 +1,7 @@
-from django.shortcuts import render,  HttpResponse
-import http.client
+from django.shortcuts import render
 import requests
+import http.client
+
     # Create your views here.
 def catalogo(request):
     url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka'

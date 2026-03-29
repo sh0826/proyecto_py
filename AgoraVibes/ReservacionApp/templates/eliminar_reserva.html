@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4">Eliminar Reservación</h1>
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <p>¿Estás seguro de que quieres eliminar esta reservación?</p>
+            <form method="POST">
+<ul>
+    <li><strong>Personas:</strong> {{ reservacion.cantidad_personas }}</li>
+    <li><strong>Mesas:</strong> {{ reservacion.cantidad_mesas }}</li>
+    <li><strong>Fecha:</strong> {{ reservacion.fecha_reservacion }}</li>
+    <li><strong>Ocasión:</strong> {{ reservacion.ocasion }}</li>
+</ul>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a href="{% url 'reservacion' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
