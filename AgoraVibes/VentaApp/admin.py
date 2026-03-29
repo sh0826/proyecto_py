@@ -14,5 +14,9 @@ class VentaAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = ('usuario', 'medio_pago', 'fecha')
     search_fields = ('usuario__nombre_completo', 'usuario__numero_documento')
     search_help_text = "Nombre del usuario o por su número de documento."
+    
+    def response_add(self, request, obj, post_url_continue = None):
+        url = reverse('admin:Detalle_VentaApp_detalleventa_add')
+        return HttpResponseRedirect(f'{url}?venta={obj.id}')
 
 admin.site.register(Venta, VentaAdmin)

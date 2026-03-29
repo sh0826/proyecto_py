@@ -20,7 +20,7 @@ class Producto (models.Model):
     unidad_MD = models.CharField(max_length=8, choices=UNIDAD_MD, null=True, blank=True, verbose_name='Unidad de Medida') 
     stock = models.IntegerField()
     precio_unitario = models.IntegerField()
-    imagen = models.ImageField(upload_to="ProductoApp")
+    imagen = models.ImageField(upload_to="ProductoApp", null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
