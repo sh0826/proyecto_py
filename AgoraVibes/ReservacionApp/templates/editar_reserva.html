@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST">
+<div style="width: 40%; margin: auto;" class="fw-bold bg-light p-3 rounded">
+    <form method="POST">
     {% csrf_token %}
 
     {{ form.as_p }}
 
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-info">
         Actualizar Reservación
     </button>
 </form>
+</div>
+
 {% endblock %}

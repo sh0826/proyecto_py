@@ -44,7 +44,14 @@ th a {
     text-align: center;
 }
 
-.export_link.btn-secondary {
+/* Escondemos globalmente cualquier rastro de botones de exportar (Listas y Formularios) */
+.export_link,
+.import_link,
+.btn-secondary.export_link,
+[class*="default"],
+[name="_export-item"],
+a[href*="export"],
+li > a[href*="export"] {
     display: none !important;
 }
 

@@ -27,9 +27,11 @@
       </div>
       <nav>
         <ul>
-          <li><a href="{% url 'inicio' %}">Conócenos</a></li>
-          <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
-          <li><a href="{% url 'eventos'%}">Eventos</a></li>
+          {% if not request.user.is_authenticated or request.user.tipo != 3 %}
+            <li><a href="{% url 'inicio' %}">Conócenos</a></li>
+            <li><a href="{% url 'catalogo' %}">Catálogo</a></li>
+            <li><a href="{% url 'eventos'%}">Eventos</a></li>
+          {% endif %}
           {% if request.user.tipo == 3 %}
               <a href="{% url 'lista' %}">Boletas</a>
               <a href="{% url 'reservacion' %}">Reservaciones</a>
