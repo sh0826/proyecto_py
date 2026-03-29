@@ -1,11 +1,12 @@
 from django.contrib.admin import AdminSite, ModelAdmin
 from import_export.admin import ExportActionMixin
 from AgoraVibes.ExportResource import CustomExportResource
-
 from Detalle_VentaApp.models import DetalleVenta
 from ReservacionApp.models import Reservacion
 from VentaApp.models import Venta
 from LoginApp.models import Usuario
+from BoletaApp.models import Boleta
+from EventoApp.models import Evento
 
 class EmpleadoAdminSite(AdminSite):
     site_header = 'Panel de Empleado'
@@ -51,6 +52,18 @@ class ReservacionReadOnlyAdmin(ReadOnlyModelAdmin):
     search_fields = ('user__nombre_completo', 'ocasion')
     search_help_text = "Puedes buscar por nombre del usuario o por la ocasión de la reservación."
 
+class BoletaReadOnlyAdmin(ReadOnlyModelAdmin):
+    list_display = ('usuario', 'evento', 'cantidad_boletos', 'precio_boleta')
+    search_fields = ('usuario__nombre_completo', 'evento__nombre')
+    search_help_text = "Puedes buscar por nombre del usuario o por el nombre del evento"
+
+class EventoReadOnlyAdmin(ReadOnlyModelAdmin):
+    list_display = ('nombre','capacidad_maxima', 'descripcion','fecha','hora_inicio','precio_boleta','imagen')
+    search_fields = ('nombre', 'fecha', 'precio_boleta', 'hora_inicio')
+    search_help_text = "Puedes buscar por el nombre del evento, precio y hora de inicio"
+
+empleado_admin_site.register(Evento, EventoReadOnlyAdmin)
+empleado_admin_site.register(Boleta, BoletaReadOnlyAdmin)    
 empleado_admin_site.register(DetalleVenta, DetalleVentaReadOnlyAdmin)
 empleado_admin_site.register(Reservacion, ReservacionReadOnlyAdmin)
 empleado_admin_site.register(Venta, VentaReadOnlyAdmin)
