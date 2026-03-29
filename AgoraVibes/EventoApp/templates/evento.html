@@ -13,7 +13,7 @@
                     <h4 class="text-warning card-subtitle mb-2 fw-bold " style="font-family: Saira Stencil One, sans-serif;">Precio $ {{ e.precio_boleta}}</h4>
                     <p class="card-text text-white">{{e.descripcion}}</p>
                     {% if e.cupos_disponibles > 0 %}
-                        <p class="text-danger" style="font-family: Black Ops One, system-ui;">
+                        <p class="text-warning" style="font-family: Black Ops One, system-ui;">
                          Cupos disponibles: {{ e.cupos_disponibles}}
                         </p>
                     {% else %}
