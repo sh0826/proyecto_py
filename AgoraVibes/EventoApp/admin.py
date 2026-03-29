@@ -12,7 +12,6 @@ class EventoResource(CustomExportResource):
             'nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen'
         )
 
-
 class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = EventoResource
     list_display = ('nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen')

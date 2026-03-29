@@ -23,14 +23,14 @@ class lista(LoginRequiredMixin, ListView):
 
         if self.request.user.tipo == 3:
             queryset = queryset.filter(usuario=self.request.user)
-
+        
         evento_id = self.request.GET.get('evento')
         if evento_id:
-            queryset = queryset.filter(evento_id=evento_id)
+            queryset = queryset.filter(evento_id = evento_id)
 
         cantidad = self.request.GET.get('cantidad')
-        if cantidad:
-            queryset = queryset.filter(cantidad_boletos=cantidad)
+        if cantidad: 
+            queryset = queryset.filter(cantidad_boletos = cantidad) 
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -64,7 +64,7 @@ class crear(LoginRequiredMixin, CreateView):
      
 class actualizar(LoginRequiredMixin, UpdateView):
     model = Boleta
-    fields = ["cantidad_boletos", "evento"]
+    fields = ["cantidad_boletos","evento"]
     template_name = 'formulario.html'
     success_url = reverse_lazy('lista')
 
@@ -72,7 +72,7 @@ class actualizar(LoginRequiredMixin, UpdateView):
         if self.request.user.tipo != 3:
             return HttpResponseForbidden("Solo clientes")
         return super().dispatch(request, *args, **kwargs)
-
+    
     def form_valid(self, form):
         boleta = self.get_object()
         evento = form.instance.evento
@@ -85,10 +85,9 @@ class actualizar(LoginRequiredMixin, UpdateView):
         if diferencia > evento.cupos_disponibles():
             form.add_error(None, "No hay más espacio para este evento")
             return self.form_invalid(form)
-
+        
         form.instance.usuario = self.request.user
         form.instance.precio_boleta = evento.precio_boleta * nueva_cantidad
-
         return super().form_valid(form)
 
 class eliminar(LoginRequiredMixin, View):
@@ -106,24 +105,22 @@ class eliminar(LoginRequiredMixin, View):
     
 class generar_pdf(LoginRequiredMixin, View):
     def get(self, request, pk):
-        boleta = get_object_or_404(Boleta, pk=pk)
-
+        boleta = get_object_or_404(Boleta, pk = pk)
+        
         if boleta.usuario != request.user:
             return HttpResponseForbidden("No tienes permiso")
-
-        response = HttpResponse(content_type='application/pdf')
+        
+        response = HttpResponse(content_type ='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="Boleta.pdf"'
 
         p = canvas.Canvas(response, pagesize=letter)
-
-        # Contenido
-        p.setFont("Helvetica", 12)
-        p.drawString(100, 750, "BOLETA - AGORA VIBES PUB")
-        p.drawString(100, 720, f"Usuario: {boleta.usuario}")
-        p.drawString(100, 700, f"Evento: {boleta.evento}")
+    
+        p.setFont("Helvetica",12)
+        p.drawString(100, 750, "BOLETA - AGORA VIBES")
+        p.drawString(100,720, f"Usuario: {boleta.usuario}")
+        p.drawString(100,700,f"Evento: { boleta.evento}")
         p.drawString(100, 680, f"Cantidad: {boleta.cantidad_boletos}")
-        p.drawString(100, 660, f"Precio Total: ${boleta.precio_boleta}")
+        p.drawString(100, 660, f"Total: {boleta.precio_boleta}")
 
         p.save()
-
         return response

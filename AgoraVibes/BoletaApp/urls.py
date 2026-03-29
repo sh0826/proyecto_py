@@ -1,5 +1,6 @@
 from .views import generar_pdf
 from django.urls import path
+from .views import generar_pdf
 from . import views
 
 urlpatterns = [
