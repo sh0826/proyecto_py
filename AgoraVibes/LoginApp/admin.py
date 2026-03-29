@@ -4,13 +4,14 @@ from django.forms import TextInput, Textarea
 from django import forms
 from .models import Usuario
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.models import Group
 
 
 class UsuarioCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
     tipo = forms.ChoiceField(
-        choices= [(1, 'Administrador'), (3, 'Empleado')],
+        choices= [(1, 'Administrador'), (2, 'Empleado'), (3, 'Cliente')],
         label="Tipo"
     )
 
@@ -45,7 +46,7 @@ class UsuarioAdmin(BaseUserAdmin):
     add_form = UsuarioCreationForm
 
     list_display = ('numero_documento', 'nombre_completo', 'correo', 'tipo', 'is_staff', 'is_active')
-    list_filter = ('tipo', 'is_staff', 'is_active')
+    list_filter = ('tipo', 'is_active')
 
     fieldsets = (
         (None, {'fields': ('numero_documento', 'password')}),
@@ -66,3 +67,10 @@ class UsuarioAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 admin.site.register(Usuario, UsuarioAdmin)
+admin.site.unregister(Group)
+
+# urls.py
+admin.site.site_header = "AgoraVibes"
+admin.site.site_title = "Portal de AgoraVibes"
+admin.site.index_title = "Panel de Administración"
+

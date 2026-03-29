@@ -46,13 +46,12 @@ class Usuario(AbstractUser):
     )
 
 
-    numero_documento = models.IntegerField(unique=True, primary_key=True)
-    tipo = models.IntegerField(default=3, choices=TIPOS)
+    numero_documento = models.IntegerField(unique=True, primary_key=True, verbose_name='Número de Documento')
+    tipo = models.IntegerField(default=3, choices=TIPOS, verbose_name='Tipo')
     nombre_completo = models.CharField(max_length=50)
     correo = models.EmailField(max_length=30)
 
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False) # Reemplaza o complementa a is_admin
+    is_active = models.BooleanField(default=True, verbose_name='Activo')
     is_superuser = models.BooleanField(default=False)
 
     objects = UsuarioManager()

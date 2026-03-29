@@ -120,7 +120,7 @@ nav ul {
 
 .card-info:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(253, 7, 7, 0.6);
+    box-shadow: 0 15px 30px #fd070799;
     border: 1px solid #c59d5f;
 }
 

@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cant_prod = models.IntegerField()
+    cant_prod = models.IntegerField(verbose_name='Cantidad de Producto')
 
     @property
     def total(self):

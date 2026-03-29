@@ -35,7 +35,15 @@ def iniciar_sesion(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/')
+
+            if user.tipo == 1:
+                return redirect ('/admin/')
+            elif user.tipo == 2:
+                return redirect ('/panel_empleado/')
+            elif user.tipo == 3:
+                return redirect ('/reservacion')
+            else:
+                return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})

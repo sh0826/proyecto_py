@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,9 +49,17 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'LoginApp',
     'widget_tweaks',
-    'jazzmin',
     'MiAPI'
 ]
+
+JAZZMIN_SETTINGS = {
+    "custom_css": "css/paneles.css",
+    "site_logo": None
+}
+
+JAZZMIN_UI_TWEAKS = {
+    'theme' : 'lux',
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

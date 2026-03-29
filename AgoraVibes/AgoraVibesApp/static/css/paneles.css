@@ -1,0 +1,41 @@
+
+body.theme-lux .btn.addlink, .btn.float-end {
+    background-color: #b7a607;
+}
+
+body.theme-lux .btn.changelink {
+    background-color: #a11111;
+}
+
+body.theme-lux .btn.viewlink {
+    background-color: #b7a607;
+}
+
+body.theme-lux .bg-danger,
+.bg-success {
+    background-color: transparent !important;
+}
+
+body.theme-lux #jazzy-sidebar {
+    width: 50% !important;
+}
+
+body.theme-lux .content-wrapper,
+.main-header,
+.main-footer {
+    margin-left: 300px !important;
+}
+
+/* Ocultar logo del sidebar */
+.brand-image {
+    display: none !important;
+}
+
+body.theme-lux select {
+    text-transform: uppercase;
+}
+
+.info {
+    color: white;
+    opacity: none !important ;
+}

@@ -8,8 +8,8 @@ class Evento(models.Model):
     capacidad_maxima = models.IntegerField()
     descripcion = models.CharField(max_length=50)
     fecha = models.DateField()
-    hora_inicio = models.TimeField()
-    precio_boleta = models.IntegerField()
+    hora_inicio = models.TimeField(verbose_name='Hora de Inicio')
+    precio_boleta = models.IntegerField(verbose_name='Precio de Boleta')
     imagen = models.ImageField(upload_to='EventoApp')
 
     def cupos_disponibles(self):
