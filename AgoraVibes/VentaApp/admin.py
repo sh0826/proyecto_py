@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Venta
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from import_export.admin import ExportActionMixin
 from AgoraVibes.ExportResource import CustomExportResource
 
