@@ -18,5 +18,6 @@ class VentaAdmin(ExportActionMixin, admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue = None):
         url = reverse('admin:Detalle_VentaApp_detalleventa_add')
         return HttpResponseRedirect(f'{url}?venta={obj.id}')
+    
 
 admin.site.register(Venta, VentaAdmin)
