@@ -1,17 +1,49 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from django.utils.html import mark_safe
 from .models import Producto
+from import_export.admin import ExportActionMixin
+from AgoraVibes.ExportResource import CustomExportResource
 
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "tipo", "precio_unitario", "stock", "mostrar_imagen")
+class ProductoResource(CustomExportResource):
+    class Meta:
+        model = Producto
+        fields = (
+            'nombre',
+            'tipo',
+            'unidad_MD',
+            'stock',
+            'precio_unitario',
+        )
+
+class ProductoAdmin(ExportActionMixin, admin.ModelAdmin):
+    resource_class = ProductoResource
+    
+    list_display = (
+        'nombre',
+        'tipo',
+        'cantidad_MD',
+        'unidad_MD',
+        'stock',
+        'precio_unitario',
+        'mostrar_imagen'
+    )
+    list_filter = (
+        'tipo',
+        'unidad_MD',
+    )
+    search_fields = (        
+        'nombre',
+        'tipo',
+        'stock',
+        'precio_unitario',)
+    search_help_text = "Nombre del producto, el tipo, stock o precio unitario."
+    
+    readonly_fields = ('mostrar_imagen',)
+
     def mostrar_imagen(self, obj):
         if obj.imagen:
-            return format_html(
-                '<img src="{}" width="50" height="50" />',
-                obj.imagen.url
-            )
+            return mark_safe(f'<img src="{obj.imagen.url}" width="100" height="100" style="object-fit: cover; border-radius: 5px;" />')
         return "Sin imagen"
-
-    mostrar_imagen.short_description = "Imagen"
+    mostrar_imagen.short_description = 'Imagen'
     
 admin.site.register(Producto, ProductoAdmin)

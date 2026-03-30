@@ -1,14 +1,26 @@
 from django.contrib import admin
 from .models import Venta
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from import_export.admin import ExportActionMixin
+from AgoraVibes.ExportResource import CustomExportResource
+from Detalle_VentaApp.models import DetalleVenta
 
-class VentaAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'fecha', 'medio_pago')
+class DetalleVentaInline(admin.TabularInline):
+    model = DetalleVenta
+    extra = 1
+class VentaResource (CustomExportResource):
+    class Meta: 
+        model = Venta
+        fields = ('usuario', 'medio_pago', 'fecha')
 
-    def response_add(self, request, obj, post_url_continue = None):
-        url = reverse('admin:Detalle_VentaApp_detalleventa_add')
-        return HttpResponseRedirect(f'{url}?venta={obj.id}')
-    
+class VentaAdmin(ExportActionMixin, admin.ModelAdmin):
+    resource_class = VentaResource
 
+    inlines = [DetalleVentaInline]
+
+    list_display = ('usuario', 'id', 'medio_pago', 'fecha', 'total')
+    list_filter = ('usuario', 'medio_pago', 'fecha')
+    search_fields = ('usuario__nombre_completo', 'usuario__numero_documento')
+    search_help_text = "Nombre del usuario o por su número de documento."
+    def total(self, obj):
+        return obj.total
 admin.site.register(Venta, VentaAdmin)

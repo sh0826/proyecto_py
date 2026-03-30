@@ -20,8 +20,6 @@ class BoletaResource(CustomExportResource):
             'precio_boletos',
             'cantidad_boletos',
         )
-
-
 class BoletaAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = BoletaResource
     list_display = ('usuario', 'evento', 'cantidad_boletos', 'precio_boleta')

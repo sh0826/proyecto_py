@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    #'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +57,10 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/paneles.css",
     "custom_js": "js/paneles.js",
     "site_logo": None,
-    "site_icon": None
+    "site_icon": None,
+    "site_title": "Panel de Admin",
+    "use_select2": False,
+    "copyright": "Agora Vibes Pub"
 }
 
 JAZZMIN_UI_TWEAKS = {
