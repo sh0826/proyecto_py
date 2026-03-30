@@ -1,4 +1,5 @@
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 
@@ -15,10 +16,9 @@ class Venta(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-""" def total(self):
+    def total(self):
         total = sum(d.total for d in self.detalleventa_set.all())
-        return total"""
+        return total
 
 def __str__(self):
         return f"Venta #{self.usuario}"
-
