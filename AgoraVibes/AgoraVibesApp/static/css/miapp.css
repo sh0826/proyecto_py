@@ -199,18 +199,3 @@ nav ul {
 .asteriskField {
     display: none;
 }
-
-.card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.card-hover:hover {
-    transform: scale(1.05);
-}
-
-.card img {
-    height: 250px;
-    object-fit: cover;
-}
