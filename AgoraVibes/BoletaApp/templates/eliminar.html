@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar Persona{% endblock %}
+{% block cuerpo %}
+
+<h2 class="text-primary text-center">Eliminar Boletas</h2>
+
+<div style="width: 40%; margin: auto;" class="fw-bold bg-light p-3 rounded">
+    <form action="" method="POST">{% csrf_token %}
+        <h4 class="text-danger">Realmente desea eliminar a {{ boletas.usuario }} ??!!</h4>
+        <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+        <a href="{% url 'listar' %}" class="btn btn-secondary mt-2">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}  
