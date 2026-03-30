@@ -48,19 +48,19 @@ class crear(LoginRequiredMixin, CreateView):
         if self.request.user.tipo != 3:
             return HttpResponseForbidden("Solo clientes")
         return super().dispatch(request, *args, **kwargs)
-    
-    def form_valid(self, form):
-        evento = form.instance.evento
-        cantidad = form.instance.cantidad_boletos
+        
+        def form_valid(self, form):
+            evento = form.instance.evento
+            cantidad = form.instance.cantidad_boletos
 
-        if cantidad > evento.cupos_disponibles():
-            form.add_error(None, "No hay más espacio para este evento")
-            return self.form_invalid(form)
+            if cantidad > evento.cupos_disponibles():
+                form.add_error(None, "No hay más espacio para este evento")
+                return self.form_invalid(form)
 
-        form.instance.usuario = self.request.user
-        form.instance.precio_boleta = evento.precio_boleta * cantidad
+            form.instance.usuario = self.request.user
+            form.instance.precio_boleta = evento.precio_boleta * cantidad
 
-        return super().form_valid(form)
+            return super().form_valid(form)
      
 class actualizar(LoginRequiredMixin, UpdateView):
     model = Boleta
