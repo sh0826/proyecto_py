@@ -24,7 +24,12 @@ class DetalleVenta(models.Model):
         verbose_name_plural = 'detalles de ventas'
 
     def clean(self):
-        if self.cant_prod > self.producto.stock:
+        if self.pk:
+            detalleAnterior = DetalleVenta.objects.get(pk=self.pk)
+            stock_real = self.producto.stock + detalleAnterior.cant_prod
+        else:
+            stock_real = self.producto.stock
+        if self.cant_prod > stock_real:
             raise ValidationError("No hay suficiente cantidad del producto")
 
     def save(self, *args, **kwargs):
