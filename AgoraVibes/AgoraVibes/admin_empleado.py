@@ -3,6 +3,7 @@ from import_export.admin import ExportActionMixin
 from AgoraVibes.ExportResource import CustomExportResource
 from Detalle_VentaApp.models import DetalleVenta
 from ReservacionApp.models import Reservacion
+from django.utils.html import mark_safe
 from VentaApp.models import Venta
 from LoginApp.models import Usuario
 from BoletaApp.models import Boleta
@@ -57,8 +58,9 @@ class BoletaReadOnlyAdmin(ReadOnlyModelAdmin):
     search_fields = ('usuario__nombre_completo', 'evento__nombre')
     search_help_text = "Puedes buscar por nombre del usuario o por el nombre del evento"
 
+
 class EventoReadOnlyAdmin(ReadOnlyModelAdmin):
-    list_display = ('nombre','capacidad_maxima', 'descripcion','fecha','hora_inicio','precio_boleta','imagen')
+    list_display = ('nombre','capacidad_maxima', 'descripcion','fecha','hora_inicio','precio_boleta')
     search_fields = ('nombre', 'fecha', 'precio_boleta', 'hora_inicio')
     search_help_text = "Puedes buscar por el nombre del evento, precio y hora de inicio"
 
