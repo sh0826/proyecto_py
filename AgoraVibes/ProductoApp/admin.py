@@ -30,13 +30,15 @@ class ProductoAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = (
         'tipo',
         'unidad_MD',
+        'cantidad_MD',
+        'precio_unitario',
     )
     search_fields = (        
         'nombre',
-        'tipo',
         'stock',
+        'cantidad_MD',
         'precio_unitario',)
-    search_help_text = "Nombre del producto, el tipo, stock o precio unitario."
+    search_help_text = "Nombre del producto, stock, cantidad de medida o precio unitario."
     
     readonly_fields = ('mostrar_imagen',)
 

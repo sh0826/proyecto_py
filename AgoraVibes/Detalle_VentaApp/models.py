@@ -11,7 +11,7 @@ class DetalleVentaAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = CustomExportResource
 
 class DetalleVenta(models.Model):
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, verbose_name='Venta')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cant_prod = models.IntegerField(verbose_name='Cantidad de Producto')
 

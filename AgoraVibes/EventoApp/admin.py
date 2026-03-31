@@ -15,7 +15,9 @@ class EventoResource(CustomExportResource):
 class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = EventoResource
     list_display = ('nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen')
-    list_filter = ('nombre', 'fecha', 'precio_boleta', 'hora_inicio')
+    list_filter = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )
+    search_fields = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )
+    search_help_text = 'Nombre, capacidad maxima, fecha, hora de inicio del evento o precio de la boleta.'
     readonly_fields = ('mostrar_imagen',)
 
     def mostrar_imagen(self, obj):

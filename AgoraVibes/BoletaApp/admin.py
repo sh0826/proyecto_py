@@ -23,8 +23,8 @@ class BoletaResource(CustomExportResource):
 class BoletaAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = BoletaResource
     list_display = ('usuario', 'evento', 'cantidad_boletos', 'precio_boleta')
-    search_fields = ('usuario__nombre_completo', 'evento__nombre')
-    search_help_text = "Nombre del usuario o nombre del evento."
+    search_fields = ('usuario__nombre_completo', 'evento__nombre', 'cantidad', 'precio_boleta')
+    search_help_text = "Nombre o número de documento del usuario, nombre del evento, cantidad o precio de las boletas."
 
     def has_add_permission(self, request):
         return False
