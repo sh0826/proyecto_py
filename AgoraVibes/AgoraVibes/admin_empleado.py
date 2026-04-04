@@ -1,4 +1,5 @@
 from django.contrib.admin import AdminSite, ModelAdmin
+from django.contrib import admin
 from import_export.admin import ExportActionMixin
 from AgoraVibes.ExportResource import CustomExportResource
 from Detalle_VentaApp.models import DetalleVenta
@@ -29,10 +30,13 @@ class ReadOnlyModelAdmin(ExportActionMixin, ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+    
     def has_change_permission(self, request, obj=None):
         return False
+    
     def has_delete_permission(self, request, obj=None):
         return False
+    
     def has_export_permission(self, request):
         return False
     
@@ -42,13 +46,63 @@ class UsuarioReadOnlyAdmin(ReadOnlyModelAdmin):
     search_help_text = "Puedes buscar por número de documento o nombre completo del usuario."
 
 class DetalleVentaReadOnlyAdmin(ReadOnlyModelAdmin):
-    list_display = ('producto', 'cant_prod')
+    list_display = ('producto', 'venta', 'cant_prod', 'total_mostrado')
+    def total_mostrado(self, obj):
+        return obj.total
+    total_mostrado.short_description = 'Total'
+    
+    def get_changeform_initial_data(self, request):
+        initial = super().get_changeform_initial_data(request) 
+        venta_id = request.GET.get('venta')
+        if venta_id:    
+            initial['venta']= venta_id
+        return initial
 
+class DetalleVentaInline(admin.TabularInline):
+    model = DetalleVenta
+    extra = 0
+    readonly_fields = ('producto', 'cant_prod', 'total_item')
+    fields = ('producto', 'cant_prod', 'total_item')
+    
+    def total_item(self, obj):
+        return obj.total
+    total_item.short_description = 'Total'
+
+    def has_view_permission(self, request, obj=None):
+        return True
+    def has_add_permission(self, request, obj=None):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False
+    def has_change_permission(self, request, obj=None):
+        return False
+    
 class VentaReadOnlyAdmin(ReadOnlyModelAdmin):
-    list_display = ('usuario', 'medio_pago', 'fecha')
+    list_display = ('usuario', 'id', 'medio_pago', 'fecha', 'total')
     list_filter = ('usuario', 'medio_pago', 'fecha')
-    search_fields = ('usuario__nombre_completo', 'usuario__numero_documento')
+    inlines = [DetalleVentaInline]
+    search_fields = ('usuario__nombre_completo', 'id', 'usuario__numero_documento')
     search_help_text = "Nombre del usuario o por su número de documento, o ID de la venta."
+    readonly_fields = ('usuario', 'total')
+    
+    def total(self, obj):
+        return obj.total
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+
+        class FormWithUser(form):
+            def __init__(self2, *args, **kw):
+                super().__init__(*args, **kw)
+                if not obj:  
+                    self2.instance.usuario = request.user
+        return FormWithUser
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.usuario = request.user
+        super().save_model(request, obj, form, change)
+
 
 class ProductoReadOnlyAdmin(ReadOnlyModelAdmin):    
     list_display = (
