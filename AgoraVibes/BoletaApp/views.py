@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from EventoApp.models import Evento
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
 # Create your views here.
 class lista(LoginRequiredMixin, ListView):
     model= Boleta
@@ -49,18 +50,18 @@ class crear(LoginRequiredMixin, CreateView):
             return HttpResponseForbidden("Solo clientes")
         return super().dispatch(request, *args, **kwargs)
         
-        def form_valid(self, form):
-            evento = form.instance.evento
-            cantidad = form.instance.cantidad_boletos
+    def form_valid(self, form):
+        evento = form.instance.evento
+        cantidad = form.instance.cantidad_boletos
 
-            if cantidad > evento.cupos_disponibles():
-                form.add_error(None, "No hay más espacio para este evento")
-                return self.form_invalid(form)
+        if cantidad > evento.cupos_disponibles():
+            form.add_error(None, "No hay más espacio para este evento")
+            return self.form_invalid(form)
 
-            form.instance.usuario = self.request.user
-            form.instance.precio_boleta = evento.precio_boleta * cantidad
+        form.instance.usuario = self.request.user
+        form.instance.precio_boleta = evento.precio_boleta * cantidad
 
-            return super().form_valid(form)
+        return super().form_valid(form)
      
 class actualizar(LoginRequiredMixin, UpdateView):
     model = Boleta
@@ -114,13 +115,48 @@ class generar_pdf(LoginRequiredMixin, View):
         response['Content-Disposition'] = f'attachment; filename="Boleta.pdf"'
 
         p = canvas.Canvas(response, pagesize=letter)
-    
-        p.setFont("Helvetica",12)
-        p.drawString(100, 750, "BOLETA - AGORA VIBES")
-        p.drawString(100,720, f"Usuario: {boleta.usuario}")
-        p.drawString(100,700,f"Evento: { boleta.evento}")
-        p.drawString(100, 680, f"Cantidad: {boleta.cantidad_boletos}")
-        p.drawString(100, 660, f"Total: {boleta.precio_boleta}")
 
+
+        width, height = letter
+
+        p.setFont("Helvetica-Bold", 20)
+        p.drawCentredString(width/2, height - 80, "AGORA VIBES PUB")
+
+        p.setFont("Helvetica", 14)
+        p.drawCentredString(width / 2, height - 110, "Boleta de evento")
+
+        p.line(50, height - 130, width - 50, height - 130)
+
+        y = height -180
+
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Usuario:")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.usuario))
+
+        y -= 30
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Evento: ")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.evento))
+
+        y-=30
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Cantidad: ")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.cantidad_boletos))
+
+        y -= 30
+        p.setFont("Helvetica-Bold", 12)  
+        p.drawString(80, y, "Total:")
+
+        total = f"${boleta.precio_boleta: ,.0f}"
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y , total)
+
+        p.line(50, y- 20, width - 50, y - 20)
+
+        p.setFont("Helvetica-Oblique", 10)
+        p.drawCentredString(width / 2, 50, "Gracias por asistir a nuestros eventos - AGORA VIBES")
         p.save()
         return response
