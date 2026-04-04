@@ -40,9 +40,11 @@
               <a href="{% url 'reservacion' %}">Reservaciones</a>
           {% endif %}
           {% if user.is_authenticated %}
-            <li>
+            <li class="d-flex align-items-center gap-3">
               <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
-              <li>{{ user.nombre_completo }}</li>
+              <span class="badge bg-warning text-dark fs-6 px-3 py-2 ">
+                Bienvenido a Agora Vibes , {{ user.nombre_completo| title}}
+              </span>
             </li>
           {% else %}
             <li><a href="{%url 'login'%}">Iniciar sesión</a></li>
