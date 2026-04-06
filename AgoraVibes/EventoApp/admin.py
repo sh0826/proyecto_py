@@ -26,4 +26,10 @@ class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
         return "Sin imagen"
     mostrar_imagen.short_description = 'Imagen'
 
+    def has_delete_permission(self, request, obj=None):
+        return True
+    
+    def get_deleted_objects(self, objs, request):
+        return [],{}, set(), []
+
 admin.site.register(Evento, EventoAdmin)
