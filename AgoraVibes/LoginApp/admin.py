@@ -17,7 +17,6 @@ class UsuarioCreationForm(forms.ModelForm):
         choices= [(1, 'Administrador'), (2, 'Empleado'), (3, 'Cliente')],
         label="Tipo"
     )
-
     class Meta:
         model = Usuario
         fields = ('numero_documento', 'nombre_completo', 'correo', 'tipo')
