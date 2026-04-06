@@ -36,6 +36,7 @@ class ReservacionForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user',None)
         super().__init__(*args, **kwargs)
         # <- todo aquí dentro
         if self.instance and self.instance.fecha_reservacion:
@@ -46,7 +47,7 @@ class ReservacionForm(forms.ModelForm):
         personas = cleaned_data.get('cantidad_personas')
         mesas = cleaned_data.get('cantidad_mesas')
         fecha = cleaned_data.get('fecha_reservacion')
-
+        user= self.user
         if personas is not None and mesas is not None: # el is not None es para asegurarnos que el campo no esté vacío, porque si el campo está vacío el cleaned_data tendrá un valor de None, y no podemos comparar None con un número, eso nos daría un error, entonces primero verificamos que no sea None antes de hacer las comparaciones es una buena práctica para evitar errores inesperados
             if personas > 44:
                 raise ValidationError("No se pueden reservar más de 44 personas.")
@@ -57,5 +58,18 @@ class ReservacionForm(forms.ModelForm):
             hoy = timezone.now().date()
             if fecha < hoy:
                 raise ValidationError("La fecha de reservación no puede ser anterior a hoy.")
+        reservas_usuario = Reservacion.objects.none()
 
+        if fecha and mesas and user:
+            reservas_usuario = Reservacion.objects.filter(
+            fecha_reservacion=fecha,
+            user=user
+    )
+
+        total_mesas = sum(r.cantidad_mesas for r in reservas_usuario)
+
+        if fecha and mesas and user and total_mesas + mesas > 11:
+            raise ValidationError(
+                "No puedes reservar más mesas para este día."
+             )
         return cleaned_data
