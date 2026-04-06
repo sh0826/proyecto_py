@@ -123,7 +123,7 @@ class generar_pdf(LoginRequiredMixin, View):
         p.drawCentredString(width/2, height - 80, "AGORA VIBES PUB")
 
         p.setFont("Helvetica", 14)
-        p.drawCentredString(width / 2, height - 110, "Boleta de evento")
+        p.drawCentredString(width / 2, height - 110, "Comprobante de Boleta")
 
         p.line(50, height - 130, width - 50, height - 130)
 
