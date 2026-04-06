@@ -39,7 +39,6 @@ exportar_pdf.short_description = "Exportar a PDF"
 
 class DetalleVentaInline(admin.TabularInline):
     model = DetalleVenta
-    extra = 1
     
     autocomplete_fields = ['producto']
 
@@ -61,29 +60,17 @@ class VentaAdmin(ExportActionMixin, admin.ModelAdmin):
     inlines = [DetalleVentaInline]
     actions = [exportar_pdf] 
 
-    readonly_fields = ('usuario',)
-
     list_display = ('usuario', 'id', 'medio_pago', 'fecha', 'total')
     list_filter = ('usuario', 'id', 'medio_pago', 'fecha')
     search_fields = ('usuario__nombre_completo', 'id', 'usuario__numero_documento')
     search_help_text = "Nombre del usuario o por su número de documento, o ID de la venta."
-
     def total(self, obj):
         return obj.total
     
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-
-        class FormWithUser(form):
-            def __init__(self2, *args, **kw):
-                super().__init__(*args, **kw)
-                if not obj:  
-                    self2.instance.usuario = request.user
-        return FormWithUser
-
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:
-            obj.usuario = request.user
-        super().save_model(request, obj, form, change)
-
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "usuario":
+            kwargs["queryset"] = db_field.related_model.objects.filter(
+            tipo__in=[1, 2] 
+        )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 admin.site.register(Venta, VentaAdmin)
