@@ -11,7 +11,10 @@ class VentaResource(CustomExportResource):
 
 class DetalleVentaAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = VentaResource
-    list_display = ('producto', 'cant_prod', 'total_mostrado')
+    list_display = ('producto', 'venta', 'cant_prod', 'total_mostrado')
+    list_filter = ('producto__nombre', 'venta')
+    search_fields = ('producto__nombre', 'cant_prod')
+    search_help_text = 'Nombre o cantidad del producto.'
 
     def total_mostrado(self, obj):
         return obj.total

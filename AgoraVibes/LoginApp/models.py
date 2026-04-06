@@ -61,8 +61,7 @@ class Usuario(AbstractUser):
 
     def __str__(self):
         return self.nombre_completo or f"Usuario {self.numero_documento}"
-    
-    
+
 class Recuperar(models.Model):
     correo = models.EmailField()
     token = models.CharField(max_length=64)

@@ -31,4 +31,29 @@ document.addEventListener('DOMContentLoaded', function () {
             h2.appendChild(clearBtn);
         }
     }
+
+    // --- ELIMINAR BOTÓN DE EXPORTAR REBELDE ---
+    function removeExportButtons() {
+        // Opción 1: Por selectores conocidos
+        const selectors = '.export_link, .import_link, [name="_export"], .btn-secondary.export_link';
+        document.querySelectorAll(selectors).forEach(el => el.remove());
+
+        // Opción 2: Por contenido de texto (el más infalible para "Exportar")
+        document.querySelectorAll('.btn, a, button').forEach(el => {
+            const text = el.textContent.trim().toLowerCase();
+            if (text === 'exportar' || text === 'export') {
+                // Si está dentro de un <li> (herramientas de objeto), eliminamos el <li>
+                if (el.parentElement.tagName === 'LI') {
+                    el.parentElement.remove();
+                } else {
+                    el.remove();
+                }
+            }
+        });
+    }
+
+    // Ejecutamos inmediatamente y tras un pequeño delay por si Jazzmin lo carga dinámicamente
+    removeExportButtons();
+    setTimeout(removeExportButtons, 100);
+    setTimeout(removeExportButtons, 500);
 });

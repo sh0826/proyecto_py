@@ -10,13 +10,14 @@ class ProductoResource(CustomExportResource):
         fields = (
             'nombre',
             'tipo',
-            'cantidad_MD',
             'unidad_MD',
             'stock',
             'precio_unitario',
         )
+
 class ProductoAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = ProductoResource
+    
     list_display = (
         'nombre',
         'tipo',
@@ -26,19 +27,18 @@ class ProductoAdmin(ExportActionMixin, admin.ModelAdmin):
         'precio_unitario',
         'mostrar_imagen'
     )
-
     list_filter = (
         'tipo',
         'unidad_MD',
-        'cantidad_MD'
+        'cantidad_MD',
+        'precio_unitario',
     )
-
     search_fields = (        
         'nombre',
-        'cantidad_MD',
         'stock',
+        'cantidad_MD',
         'precio_unitario',)
-    search_help_text = "Nombre del producto, cantidad, stock o precio unitario."
+    search_help_text = "Nombre del producto, stock, cantidad de medida o precio unitario."
     
     readonly_fields = ('mostrar_imagen',)
 

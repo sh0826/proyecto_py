@@ -1,12 +1,17 @@
-
+from django.contrib import admin
 from django.db import models
-from django.contrib.auth.models import User
 from ProductoApp.models import Producto
 from VentaApp.models import Venta   
 from django.core.exceptions import ValidationError
+from import_export.admin import ExportActionMixin
+from AgoraVibes.ExportResource import CustomExportResource
+
+
+class DetalleVentaAdmin(ExportActionMixin, admin.ModelAdmin):
+    resource_class = CustomExportResource
 
 class DetalleVenta(models.Model):
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, verbose_name='Venta')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cant_prod = models.IntegerField(verbose_name='Cantidad de Producto')
 
@@ -19,9 +24,14 @@ class DetalleVenta(models.Model):
         verbose_name_plural = 'detalles de ventas'
 
     def clean(self):
-        if self.cant_prod > self.producto.stock:
+        if self.pk:
+            detalleAnterior = DetalleVenta.objects.get(pk=self.pk)
+            stock_real = self.producto.stock + detalleAnterior.cant_prod
+        else:
+            stock_real = self.producto.stock
+        if self.cant_prod > stock_real:
             raise ValidationError("No hay suficiente cantidad del producto")
-        
+
     def save(self, *args, **kwargs):
         if self.pk:
             detalleAnterior = DetalleVenta.objects.get(pk=self.pk)
@@ -32,6 +42,7 @@ class DetalleVenta(models.Model):
 
         self.producto.save()
         super().save(*args, **kwargs)
-    def __str__(self):
-        return f"{self.producto} - {self.venta}"
 
+    def __str__(self):
+        return f"{self.producto}"
+ 

@@ -10,6 +10,9 @@ from django.views import View
 from django.db.models import Sum 
 from django.core.exceptions import ValidationError
 from EventoApp.models import Evento
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
 # Create your views here.
 class lista(LoginRequiredMixin, ListView):
     model= Boleta
@@ -17,15 +20,50 @@ class lista(LoginRequiredMixin, ListView):
     context_object_name = 'boletas'
 
     def get_queryset(self):
+        queryset = Boleta.objects.all()
+
         if self.request.user.tipo == 3:
-            return  Boleta.objects.filter(usuario=self.request.user)
-        return Boleta.objects.all()
+            queryset = queryset.filter(usuario=self.request.user)
+        
+        evento_id = self.request.GET.get('evento')
+        if evento_id:
+            queryset = queryset.filter(evento_id = evento_id)
+
+        cantidad = self.request.GET.get('cantidad')
+        if cantidad: 
+            queryset = queryset.filter(cantidad_boletos = cantidad) 
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['eventos'] = Evento.objects.all()
         return context
+    
 class crear(LoginRequiredMixin, CreateView):
+    model = Boleta
+    fields = ["cantidad_boletos","evento"]
+    template_name = 'formulario.html'
+    success_url = reverse_lazy('lista')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.tipo != 3:
+            return HttpResponseForbidden("Solo clientes")
+        return super().dispatch(request, *args, **kwargs)
+        
+    def form_valid(self, form):
+        evento = form.instance.evento
+        cantidad = form.instance.cantidad_boletos
+
+        if cantidad > evento.cupos_disponibles():
+            form.add_error(None, "No hay más espacio para este evento")
+            return self.form_invalid(form)
+
+        form.instance.usuario = self.request.user
+        form.instance.precio_boleta = evento.precio_boleta * cantidad
+
+        return super().form_valid(form)
+     
+class actualizar(LoginRequiredMixin, UpdateView):
     model = Boleta
     fields = ["cantidad_boletos","evento"]
     template_name = 'formulario.html'
@@ -37,48 +75,20 @@ class crear(LoginRequiredMixin, CreateView):
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
+        boleta = self.get_object()
         evento = form.instance.evento
-        cantidad = form.instance.cantidad_boletos
 
-        # VALIDAR CUPOS
-        if cantidad > evento.cupos_disponibles():
-            form.add_error(None, "No hay más espacio para este evento 😸")
+        cantidad_anterior = boleta.cantidad_boletos
+        nueva_cantidad = form.instance.cantidad_boletos
+
+        diferencia = nueva_cantidad - cantidad_anterior
+
+        if diferencia > evento.cupos_disponibles():
+            form.add_error(None, "No hay más espacio para este evento")
             return self.form_invalid(form)
-
-        # GUARDAR DATOS
+        
         form.instance.usuario = self.request.user
-        form.instance.precio_boleta = evento.precio_boleta * cantidad
-
-        return super().form_valid(form)
-     
-class actualizar(LoginRequiredMixin, UpdateView):
-    model = Boleta
-    fields = ["cantidad_boletos"    ,"evento"]
-    template_name = 'formulario.html'
-    success_url = reverse_lazy('lista')
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.tipo != 3 :
-            return HttpResponseForbidden("Solo clientes")
-        return super().dispatch(request, *args, **kwargs)   
-    
-    def form_valid(self, form):
-        form.instance.usuario = self.request.user
-        form.instance.precio_boleta = (
-            form.instance.evento.precio_boleta * form.instance.cantidad_boletos
-        )
-        return super().form_valid(form)
-    def form_valid(self, form):
-        evento = form.instance.evento
-        cantidad = form.instance.cantidad_boletos
-
-        if cantidad > evento.cupos_disponibles():
-            form.add_error(None, "No hay más espacio para este evento 😸")
-            return self.form_invalid(form)
-
-        form.instance.usuario = self.request.user
-        form.instance.precio_boleta = evento.precio_boleta * cantidad
-
+        form.instance.precio_boleta = evento.precio_boleta * nueva_cantidad
         return super().form_valid(form)
 
 class eliminar(LoginRequiredMixin, View):
@@ -94,3 +104,59 @@ class eliminar(LoginRequiredMixin, View):
         boleta.delete()
         return redirect('lista')
     
+class generar_pdf(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        boleta = get_object_or_404(Boleta, pk = pk)
+        
+        if boleta.usuario != request.user:
+            return HttpResponseForbidden("No tienes permiso")
+        
+        response = HttpResponse(content_type ='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="Boleta.pdf"'
+
+        p = canvas.Canvas(response, pagesize=letter)
+
+
+        width, height = letter
+
+        p.setFont("Helvetica-Bold", 20)
+        p.drawCentredString(width/2, height - 80, "AGORA VIBES PUB")
+
+        p.setFont("Helvetica", 14)
+        p.drawCentredString(width / 2, height - 110, "Comprobante de Boleta")
+
+        p.line(50, height - 130, width - 50, height - 130)
+
+        y = height -180
+
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Usuario:")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.usuario))
+
+        y -= 30
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Evento: ")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.evento))
+
+        y-=30
+        p.setFont("Helvetica-Bold", 12)
+        p.drawString(80, y, "Cantidad: ")
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y, str(boleta.cantidad_boletos))
+
+        y -= 30
+        p.setFont("Helvetica-Bold", 12)  
+        p.drawString(80, y, "Total:")
+
+        total = f"${boleta.precio_boleta: ,.0f}"
+        p.setFont("Helvetica", 12)
+        p.drawString(180, y , total)
+
+        p.line(50, y- 20, width - 50, y - 20)
+
+        p.setFont("Helvetica-Oblique", 10)
+        p.drawCentredString(width / 2, 50, "Gracias por asistir a nuestros eventos - AGORA VIBES")
+        p.save()
+        return response

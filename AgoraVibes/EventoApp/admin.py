@@ -12,11 +12,12 @@ class EventoResource(CustomExportResource):
             'nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen'
         )
 
-
 class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = EventoResource
     list_display = ('nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen')
-    list_filter = ('nombre', 'fecha', 'precio_boleta', 'hora_inicio')
+    list_filter = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )
+    search_fields = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )
+    search_help_text = 'Nombre, capacidad maxima, fecha, hora de inicio del evento o precio de la boleta.'
     readonly_fields = ('mostrar_imagen',)
 
     def mostrar_imagen(self, obj):
@@ -24,5 +25,11 @@ class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
             return mark_safe(f'<img src="{obj.imagen.url}" width="100" height="100" style="object-fit: cover; border-radius: 5px;" />')
         return "Sin imagen"
     mostrar_imagen.short_description = 'Imagen'
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+    
+    def get_deleted_objects(self, objs, request):
+        return [],{}, set(), []
 
 admin.site.register(Evento, EventoAdmin)

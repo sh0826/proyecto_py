@@ -4,21 +4,40 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static '/css/miapp.css' %}">
-<h1 class="text-dark text-center" style="font-family: Rubik Dirt, system-ui;">Tus Boletas</h1>
-<div class=" container mt-5">    
+<h1 class="text-dark text-center" style="font-family: 'Rubik Dirt', system-ui;">Tus Boletas</h1>
 
     <table class="table table-light table-bordered">
         {% if request.user.tipo == 3 %}
-            {% for e in eventos %}
-                {% if e.cupos_disponibles > 0 %}
-                    <a href="{% url 'crear' %}" class="btn btn-danger mb-2">Nueva Boleta</a>
-                {% else %}
-                    <button class="btn btn-secondary mb-2" disabled>
-                        Agotado
-                    </button>
-                {% endif %}
-            {% endfor %}
+            <a href="{% url 'crear' %}" class="btn btn-danger mb-2">Nueva Boleta</a>
         {% endif %}
+        <br>
+        <strong>Verifica los cupos de cada evento: </strong>
+        <select name="evento" class="form-select">
+            {% for evento in eventos %}
+                <option value="{{ evento.id }}">
+                    {{ evento.nombre }} (Cupos: {{ evento.cupos_disponibles }})
+                </option>
+            {% endfor %}
+        </select>
+        <br>
+        <strong>Busca por el nombre del evento o cantidad de boletos: </strong>
+        <form method="get" class="mb-4">
+            <div class="d-flex gap-2">
+                <select name="evento" class="form-select">
+                    <option value="">Todos los eventos</option>
+                    {% for evento in eventos %}
+                        <option value="{{ evento.id }}"
+                        {% if request.GET.evento == evento.id|stringformat:"s" %}selected{% endif %}>
+                            {{ evento.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="cantidad" class="form-control" placeholder="Cantidad" value="{{ request.GET.cantidad}}">
+                <button type="submit" class="btn btn-dark w-100">Filtrar</button>
+                <a href="{% url 'listar' %}" class="btn btn-danger w-100">Limpiar</a>
+            </div>
+        </form>
+        <br>
         <thead>
             <tr align="center">
                 <th>Nombre</th>
@@ -43,6 +62,7 @@
                         {% else %}
                             Solo lectura
                         {% endif %}
+                        <a href="{% url 'boleta_pdf' b.id %}" class="btn btn-danger">Descargar Boleta</a>
                     </td>
                 </tr>
             {% empty %}

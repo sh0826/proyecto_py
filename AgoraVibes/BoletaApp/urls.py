@@ -1,4 +1,6 @@
+from .views import generar_pdf
 from django.urls import path
+from .views import generar_pdf
 from . import views
 
 urlpatterns = [
@@ -7,4 +9,5 @@ urlpatterns = [
     path('actualizar/<int:pk>', views.actualizar.as_view(), name='actualizar'),
     path('eliminar/<int:pk>', views.eliminar.as_view(), name='eliminar'),    
     path('listar/', views.lista.as_view(), name='listar'),
+    path('boleta/pdf/<int:pk>/', generar_pdf.as_view(), name='boleta_pdf'),
 ]

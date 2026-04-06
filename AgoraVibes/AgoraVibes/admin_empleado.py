@@ -1,11 +1,13 @@
 from django.contrib.admin import AdminSite, ModelAdmin
 from import_export.admin import ExportActionMixin
 from AgoraVibes.ExportResource import CustomExportResource
-
 from Detalle_VentaApp.models import DetalleVenta
 from ReservacionApp.models import Reservacion
+from django.utils.html import mark_safe
 from VentaApp.models import Venta
 from LoginApp.models import Usuario
+from EventoApp.models import Evento
+from ProductoApp.models import Producto
 
 class EmpleadoAdminSite(AdminSite):
     site_header = 'Panel de Empleado'
@@ -31,6 +33,8 @@ class ReadOnlyModelAdmin(ExportActionMixin, ModelAdmin):
         return False
     def has_delete_permission(self, request, obj=None):
         return False
+    def has_export_permission(self, request):
+        return False
     
 class UsuarioReadOnlyAdmin(ReadOnlyModelAdmin):
     list_display = ('numero_documento', 'nombre_completo', 'correo', 'tipo', 'is_active')
@@ -44,14 +48,53 @@ class VentaReadOnlyAdmin(ReadOnlyModelAdmin):
     list_display = ('usuario', 'medio_pago', 'fecha')
     list_filter = ('usuario', 'medio_pago', 'fecha')
     search_fields = ('usuario__nombre_completo', 'usuario__numero_documento')
-    search_help_text = "Nombre del usuario o por su número de documento."
+    search_help_text = "Nombre del usuario o por su número de documento, o ID de la venta."
+
+class ProductoReadOnlyAdmin(ReadOnlyModelAdmin):    
+    list_display = (
+        'nombre',
+        'tipo',
+        'cantidad_MD',
+        'unidad_MD',
+        'stock',
+        'precio_unitario',
+        'mostrar_imagen'
+    )
+    list_filter = (
+        'tipo',
+        'unidad_MD',
+        'cantidad_MD',
+        'precio_unitario',
+    )
+    search_fields = (        
+        'nombre',
+        'stock',
+        'cantidad_MD',
+        'precio_unitario',)
+    search_help_text = "Nombre del producto, stock, cantidad de medida o precio unitario."
+    
+    readonly_fields = ('mostrar_imagen',)
+
+    def mostrar_imagen(self, obj):
+        if obj.imagen:
+            return mark_safe(f'<img src="{obj.imagen.url}" width="100" height="100" style="object-fit: cover; border-radius: 5px;" />')
+        return "Sin imagen"
+    mostrar_imagen.short_description = 'Imagen'
+
 
 class ReservacionReadOnlyAdmin(ReadOnlyModelAdmin):
     list_display = ('user', 'cantidad_personas', 'cantidad_mesas', 'fecha_reservacion', 'ocasion')
     search_fields = ('user__nombre_completo', 'ocasion')
     search_help_text = "Puedes buscar por nombre del usuario o por la ocasión de la reservación."
 
+class EventoReadOnlyAdmin(ReadOnlyModelAdmin):
+    list_display = ('nombre','capacidad_maxima', 'descripcion','fecha','hora_inicio','precio_boleta')
+    search_fields = ('nombre', 'fecha', 'precio_boleta', 'hora_inicio')
+    search_help_text = "Puedes buscar por el nombre del evento, precio y hora de inicio"
+
+empleado_admin_site.register(Evento, EventoReadOnlyAdmin)
 empleado_admin_site.register(DetalleVenta, DetalleVentaReadOnlyAdmin)
 empleado_admin_site.register(Reservacion, ReservacionReadOnlyAdmin)
 empleado_admin_site.register(Venta, VentaReadOnlyAdmin)
 empleado_admin_site.register(Usuario, UsuarioReadOnlyAdmin)
+empleado_admin_site.register(Producto, ProductoReadOnlyAdmin)

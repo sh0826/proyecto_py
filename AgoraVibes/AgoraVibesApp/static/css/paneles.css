@@ -26,6 +26,12 @@ body.theme-lux .content-wrapper,
     margin-left: 300px !important;
 }
 
+.navbar-nav .nav-link.btn {
+    padding-top: .715rem;
+    padding-bottom: .715rem;
+    background-color: beige;
+}
+
 /* Ocultar logo del sidebar */
 .brand-image {
     display: none !important;
@@ -44,7 +50,13 @@ th a {
     text-align: center;
 }
 
-.export_link.btn-secondary {
+/* Escondemos globalmente cualquier rastro de botones de exportar (Listas y Formularios) */
+.export_link,
+.import_link,
+.btn-secondary.export_link,
+[name="_export-item"],
+a[href*="export"],
+li > a[href*="export"] {
     display: none !important;
 }
 
@@ -173,3 +185,70 @@ th a {
     color: #fff !important;
     transform: rotate(90deg) scale(1.2);
 }
+
+input[name="_export-item"] {
+    display: none !important;
+}
+
+
+/* Botón de "Añadir otra fila" en Inlines (Ventas) */
+.add-row a {
+    background-color: #b7a607 !important;
+    color: #fff !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.add-row a:hover {
+    background-color: #d1bd07 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.add-row a::before {
+    content: "\f067"; /* Icono plus de FontAwesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+/* Ocultar iconos de acciones relacionadas persistentemente */
+.related-widget-wrapper-link {
+    display: none !important;
+}
+
+/* Estilo para la columna de ELIMINAR */
+.delete label {
+    font-weight: 700 !important;
+    color: #a11111 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.delete input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/* Ajustes generales de espaciado en la tabla inline */
+.inline-related table thead th {
+    background: #f8f9fa;
+    padding: 12px !important;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.inline-related table tbody td {
+    padding: 12px 8px !important;
+    vertical-align: middle;
+}
+
