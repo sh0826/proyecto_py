@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 from .forms import ReservacionForm
-
+from django.contrib import messages
 # Vista para listar las reservas del usuario
 def reservacion(request):
     reservaciones = models.Reservacion.objects.filter(user=request.user)
@@ -15,6 +15,7 @@ def crear_reserva(request):
             reservacion = form.save(commit=False)
             reservacion.user = request.user  # Asignamos el usuario antes de guardar
             reservacion.save()
+            messages.success(request, "Reservación creada exitosamente.")
             return redirect("reservacion")
         else:
             print(form.errors)  # Para depurar errores de validación
