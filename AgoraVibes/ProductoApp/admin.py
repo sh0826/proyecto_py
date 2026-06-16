@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from .models import Producto
-from import_export.admin import ExportActionMixin
+from import_export.admin import ExportActionMixin, ImportExportModelAdmin
 from AgoraVibes.ExportResource import CustomExportResource
 
 class ProductoResource(CustomExportResource):
     class Meta:
         model = Producto
+        import_id_fields = ()
         fields = (
             'nombre',
             'tipo',
@@ -15,9 +16,9 @@ class ProductoResource(CustomExportResource):
             'precio_unitario',
         )
 
-class ProductoAdmin(ExportActionMixin, admin.ModelAdmin):
+class ProductoAdmin(ExportActionMixin, ImportExportModelAdmin ,admin.ModelAdmin):
     resource_class = ProductoResource
-    
+    import_id_fields = ()
     list_display = (
         'nombre',
         'tipo',

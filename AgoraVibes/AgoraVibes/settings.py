@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'import_export',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     'LoginApp',
     'widget_tweaks',
     'MiAPI',
-    'import_export'
 ]
 
 JAZZMIN_SETTINGS = {

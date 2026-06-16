@@ -1,19 +1,21 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from .models import Evento
-from import_export.admin import ExportActionMixin
+from import_export.admin import ExportActionMixin, ImportExportModelAdmin
 from AgoraVibes.ExportResource import CustomExportResource
 
 # Register your models here.
 class EventoResource(CustomExportResource):
     class Meta:
         model = Evento
+        import_id_fields = ()
         fields = (
             'nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen'
         )
 
-class EventoAdmin(ExportActionMixin, admin.ModelAdmin):
+class EventoAdmin(ExportActionMixin, ImportExportModelAdmin ,admin.ModelAdmin):
     resource_class = EventoResource
+    import_id_fields = ()
     list_display = ('nombre', 'capacidad_maxima', 'descripcion', 'fecha', 'hora_inicio', 'precio_boleta', 'mostrar_imagen')
     list_filter = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )
     search_fields = ('nombre', 'capacidad_maxima', 'fecha', 'hora_inicio', 'precio_boleta' )

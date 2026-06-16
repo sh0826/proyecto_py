@@ -11,6 +11,7 @@ class VentaResource(CustomExportResource):
 
 class DetalleVentaAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = VentaResource
+    import_id_fields = ()
     list_display = ('producto', 'venta', 'cant_prod', 'total_mostrado')
     list_filter = ('producto__nombre', 'venta')
     search_fields = ('producto__nombre', 'cant_prod')

@@ -50,17 +50,49 @@ th a {
     text-align: center;
 }
 
-/* Escondemos globalmente cualquier rastro de botones de exportar (Listas y Formularios) */
-.export_link,
-.import_link,
-.btn-secondary.export_link,
-[name="_export-item"],
-a[href*="export"],
-li > a[href*="export"] {
-    display: none !important;
+/* ─── Limpieza del contenedor de la lista (Remover puntos) ─── */
+.object-tools {
+    list-style: none !important; /* Quita los puntos/viñetas */
+    padding-left: 0 !important;   /* Quita el espaciado por defecto */
+    margin: 0 !important;
+    display: flex;                /* Alinea los elementos en línea */
+    justify-content: flex-end;    /* Empuja todo hacia la derecha */
+    gap: 8px;                     /* Separa los botones entre sí */
 }
 
-/* ─── Barra de Búsqueda ─────────────────────────────────── */
+.object-tools li {
+    list-style-type: none !important; /* Refuerzo para navegadores estrictos */
+    display: inline-block !important;
+}
+
+/* ─── Estilo unificado para el enlace de Importar (Dorado como añadir) ─── */
+.object-tools .import_link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;             /* Texto en negrita igual a tus otros botones */
+    line-height: 1.5;
+    color: #fff !important;
+    text-align: center;
+    text-decoration: none !important;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: #078bb7 !important; /* Tu color dorado corporativo */
+    border: 1px solid #078bb7 !important;
+    padding: .375rem .75rem;
+    font-size: 0.85rem;           /* Un poco más estilizado */
+    border-radius: .25rem;
+    text-transform: uppercase;    /* Mayúsculas como "AÑADIR PRODUCTO" */
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+/* Efecto Hover para Importar */
+.object-tools .import_link:hover {
+    color: #fff !important;
+    background-color: #078bb7 !important; /* Dorado un poco más oscuro al pasar el mouse */
+    border-color: #078bb7 !important;
+    text-decoration: none !important;
+}/* ─── Barra de Búsqueda ─────────────────────────────────── */
 #changelist-search {
     background: #f8f9fa !important;
     border: 1px solid #dee2e6 !important;
@@ -252,3 +284,7 @@ input[name="_export-item"] {
     vertical-align: middle;
 }
 
+.object-tools .export_link,
+.object-tools .export_link {
+    display: none !important;
+}
