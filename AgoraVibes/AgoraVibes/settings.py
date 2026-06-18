@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'LoginApp',
     'widget_tweaks',
     'MiAPI',
+    'django.contrib.humanize',
 ]
 
 JAZZMIN_SETTINGS = {
@@ -134,7 +135,7 @@ AUTH_USER_MODEL = 'LoginApp.Usuario'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'es-col'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'UTC'
 
