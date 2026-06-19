@@ -54,6 +54,10 @@ class crear(LoginRequiredMixin, CreateView):
         evento = form.instance.evento
         cantidad = form.instance.cantidad_boletos
 
+        if cantidad <= 0:
+            form.add_error('cantidad_boletos','La cantidad de boletos debe ser mayor a 0')
+            return self.form_invalid(form)
+
         if cantidad > evento.cupos_disponibles():
             form.add_error(None, "No hay más espacio para este evento")
             return self.form_invalid(form)
@@ -80,6 +84,10 @@ class actualizar(LoginRequiredMixin, UpdateView):
 
         cantidad_anterior = boleta.cantidad_boletos
         nueva_cantidad = form.instance.cantidad_boletos
+
+        if nueva_cantidad <= 0:
+            form.add_error('cantidad_boletos','La cantidad de boletos debe ser mayor a 0')
+            return self.form_invalid(form)
 
         diferencia = nueva_cantidad - cantidad_anterior
 
