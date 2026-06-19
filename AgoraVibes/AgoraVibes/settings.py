@@ -9,13 +9,12 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-import logging
 import os
 import dj_database_url
+from dotenv import load_dotenv
 from pathlib import Path
-from urllib.parse import quote_plus
 
-logger = logging.getLogger(__name__)
+load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,13 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gf$**md&z$^rk%_htrz@7+^mp5b!2jec2a!th7z10g(-(#9ct3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = [
-    'https://proyectopy-production.up.railway.app',
-    'https://*.up.railway.app' 
-]
+# Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -107,45 +103,9 @@ WSGI_APPLICATION = 'AgoraVibes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-def _get_database_url():
-    for key in ('DATABASE_URL', 'DATABASE_PRIVATE_URL', 'DATABASE_PUBLIC_URL'):
-        url = os.environ.get(key)
-        if url:
-            return url
-
-    pg_host = os.environ.get('PGHOST')
-    if pg_host:
-        user = os.environ.get('PGUSER', 'postgres')
-        password = quote_plus(os.environ.get('PGPASSWORD', ''))
-        port = os.environ.get('PGPORT', '5432')
-        database = os.environ.get('PGDATABASE', 'railway')
-        return f'postgresql://{user}:{password}@{pg_host}:{port}/{database}'
-
-    return None
-
-
-DATABASE_URL = _get_database_url()
-
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require='railway.internal' not in DATABASE_URL,
-        )
-    }
-else:
-    if os.environ.get('RAILWAY_ENVIRONMENT'):
-        logger.warning(
-            'PostgreSQL no configurado en Railway. Vincula el servicio Postgres al web '
-            'y agrega DATABASE_URL (${{Postgres.DATABASE_URL}}). Usando SQLite temporal.'
-        )
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(default= os.getenv('DATABASE_URL'))
+}
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
