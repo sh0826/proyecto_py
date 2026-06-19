@@ -166,3 +166,7 @@ from import_export.formats.base_formats import XLSX
 from AgoraVibes.ExportFormat import PDFFormat
 
 IMPORT_EXPORT_FORMATS = [XLSX, PDFFormat]
+CSRF_TRUSTED_ORIGINS = [
+    'https://proyectopy-production.up.railway.app',
+    'https://*.up.railway.app',
+]
