@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gf$**md&z$^rk%_htrz@7+^mp5b!2jec2a!th7z10g(-(#9ct3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = [
@@ -103,11 +103,26 @@ WSGI_APPLICATION = 'AgoraVibes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-if os.environ.get('DATABASE_URL'):
+# Railway expone DATABASE_URL al vincular Postgres; DATABASE_PRIVATE_URL es la red interna.
+DATABASE_URL = (
+    os.environ.get('DATABASE_URL')
+    or os.environ.get('DATABASE_PRIVATE_URL')
+)
+
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require='railway.internal' not in DATABASE_URL,
+        )
     }
 else:
+    if os.environ.get('RAILWAY_ENVIRONMENT'):
+        raise RuntimeError(
+            'En Railway debes vincular el servicio PostgreSQL al servicio web. '
+            'Agrega la variable DATABASE_URL en Variables (referencia: ${{Postgres.DATABASE_URL}}).'
+        )
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
