@@ -1,1 +1,1 @@
-web: gunicorn AgoraVibes.wsgi
+web: gunicorn --pythonpath AgoraVibes AgoraVibes.wsgi
