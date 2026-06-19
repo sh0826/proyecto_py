@@ -4,7 +4,7 @@ import http.client
 
     # Create your views here.
 def catalogo(request):
-    url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka'
+    url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka'
     response = requests.get(url)
     data = []
     if response.status_code == 200:
