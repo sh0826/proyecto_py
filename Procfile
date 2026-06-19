@@ -1,1 +1,1 @@
-web: python AgoraVibes/manage.py migrate --noinput && gunicorn --pythonpath AgoraVibes AgoraVibes.wsgi --bind 0.0.0.0:$PORT
+web: python AgoraVibes/manage.py collectstatic --noinput && python AgoraVibes/manage.py migrate --noinput && gunicorn --pythonpath AgoraVibes AgoraVibes.wsgi --bind 0.0.0.0:$PORT
