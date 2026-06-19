@@ -1,1 +1,1 @@
-web: python AgoraVibes/manage.py migrate --noinput && gunicorn --chdir AgoraVibes AgoraVibes.wsgi --bind 0.0.0.0:$PORT --workers 2
+web: ls -R
