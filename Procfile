@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath AgoraVibes AgoraVibes.wsgi
+web: gunicorn --pythonpath AgoraVibes AgoraVibes.wsgi -b 0.0.0.0:$PORT
