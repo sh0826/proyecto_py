@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-gf$**md&z$^rk%_htrz@7+^mp5b!2jec2a!th7z10g(-(#9ct3
 DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
-# Application definition
+CSRF_TRUSTED_ORIGINS = [
+    'https://proyectopy-production.up.railway.app',
+    'https://*.up.railway.app' 
+]
 
 INSTALLED_APPS = [
     'jazzmin',
