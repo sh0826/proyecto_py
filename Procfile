@@ -1,1 +1,1 @@
-web: python manage.py migrate --noinput && gunicorn AgoraVibes.wsgi --bind 0.0.0.0:$PORT --workers 2    
+web: gunicorn AgoraVibes.wsgi --bind 0.0.0.0:$PORT --workers 2
