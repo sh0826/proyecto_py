@@ -63,10 +63,6 @@ JAZZMIN_SETTINGS = {
     "copyright": "Agora Vibes Pub"
 }
 
-JAZZMIN_UI_TWEAKS = {
-    'theme' : 'lux',
-}
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
