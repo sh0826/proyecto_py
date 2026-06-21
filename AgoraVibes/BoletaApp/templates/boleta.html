@@ -45,12 +45,12 @@
                         </p>
                         <div class="estado-cupos">
                             {% if e.cupos_disponibles > 0 %}
-                            <p class="text-warning mb-2">
+                            <p class="text-warning mb-0">
                                 Cupos disponibles:
                                 {{ e.cupos_disponibles }}
                             </p>
                         {% else %}
-                            <p class="text-danger fw-bold mb-2">
+                            <p class="text-danger fw-bold mb-0">
                                 AGOTADO
                             </p>
                         {% endif %}
