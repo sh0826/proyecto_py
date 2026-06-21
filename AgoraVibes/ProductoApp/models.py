@@ -49,5 +49,5 @@ class Producto (models.Model):
 
     def __str__(self):
         if self.cantidad_MD and self.unidad_MD:
-            return f"{self.nombre} - {self.cantidad_MD} {self.unidad_MD}"
+            return f"{self.nombre} - {self.cantidad_MD}{self.unidad_MD}"
         return f"{self.nombre} - {self.unidad_MD}"   
