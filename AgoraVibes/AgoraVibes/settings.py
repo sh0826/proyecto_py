@@ -11,20 +11,14 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 import dj_database_url 
-import cloudinary
 from dotenv import load_dotenv 
 from pathlib import Path
 
 load_dotenv()
 
-cloudinary.config(
-    cloud_name = os.getenv("dxv7y325d"),
-    api_key=os.getenv("729786937397963"),
-    api_secret=os.getenv("C_bsi_ssaPid97zxGMa2t5EhqAM")
-)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -60,8 +54,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'MiAPI',
     'django.contrib.humanize',
-    'cloudinary',
-    'cloudinary_storage'
 ]
 
 JAZZMIN_SETTINGS = {
@@ -152,10 +144,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Reemplaza la línea anterior de STATICFILES_STORAGE por esta:
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage", # <-- Esta no genera crasheos si falta un archivo
     },
 }
 MEDIA_URL = '/media/'
