@@ -22,9 +22,14 @@ def registrar_usuario(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             form.save()
+
+            messages.success(request, 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.')
+
             return redirect('login')
+        
     else:
         form = RegistroForm()
+        
     return render(request, 'registrar.html', {'form': form})
 
 def iniciar_sesion(request):
