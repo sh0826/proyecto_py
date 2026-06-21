@@ -275,6 +275,31 @@ transition:transform .6s ease;
 .foto-momento-wrap{
 flex:0 0 25%;
 }
+.slider-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:55px;
+height:55px;
+border:none;
+border-radius:50%;
+background:rgba(0,0,0,.6);
+color:#d4af37;
+font-size:30px;
+z-index:10;
+cursor:pointer;
+transition:.3s;
+}
+.slider-btn:hover{
+background:#d4af37;
+color:#000;
+}
+.prev{
+left:20px;
+}
+.next{
+right:20px;
+}
 
 @media (max-width: 992px) {
     .momentos-grid {
@@ -572,6 +597,26 @@ flex:0 0 25%;
         </iframe>
     </div>
 </section>
-
+<script>
+const grid = document.querySelector('.momentos-grid');
+const next = document.querySelector('.next');
+const prev = document.querySelector('.prev');
+let posicion = 0;
+const total = 6;
+const visibles = 4;
+const maximo = total - visibles;
+next.addEventListener('click',()=>{
+if(posicion < maximo){
+posicion++;
+}
+grid.style.transform = `translateX(-${posicion*25}%)`;
+});
+prev.addEventListener('click',()=>{
+if(posicion > 0){
+posicion--;
+}
+grid.style.transform = `translateX(-${posicion*25}%)`;
+});
+</script>
 {% endif %}
 {% endblock %}
