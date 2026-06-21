@@ -23,4 +23,4 @@ class Venta(models.Model):
         verbose_name: 'Venta'
         verbose_name_plural = 'Ventas'
     def __str__(self):
-        return f" Venta#{self.id} - {self.usuario}"
+        return f" Venta asociada al id: {self.id} - {self.usuario}"
