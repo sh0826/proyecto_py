@@ -19,10 +19,10 @@
 
             {% for e in eventos %}
             <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
-                <div class="card rounded mt-3 bg-dark evento-card">
+                <div class="card rounded mt-3 bg-dark evento-card h-100">
                     <img src="{{ e.imagen.url }}"
                          alt="{{ e.nombre }}"
-                         class="card-img-top">
+                         class="card-img-top evento-img">
 
                     <div class="card-body">
                         <h5 class="card-title text-white"
@@ -43,17 +43,18 @@
                         <p class="card-text text-white">
                             {{ e.descripcion }}
                         </p>
-
-                        {% if e.cupos_disponibles > 0 %}
-                            <p class="text-warning">
+                        <div class="estado-cupos">
+                            {% if e.cupos_disponibles > 0 %}
+                            <p class="text-warning mb-0">
                                 Cupos disponibles:
                                 {{ e.cupos_disponibles }}
                             </p>
                         {% else %}
-                            <p class="text-danger fw-bold">
+                            <p class="text-danger fw-bold mb-0">
                                 AGOTADO
                             </p>
                         {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
