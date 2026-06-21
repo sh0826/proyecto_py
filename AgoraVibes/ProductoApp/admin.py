@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from .models import Producto
+from .forms import ProductoAdminForm
 from import_export.admin import ExportActionMixin, ImportExportModelAdmin
 from AgoraVibes.ExportResource import CustomExportResource
 
@@ -17,6 +18,7 @@ class ProductoResource(CustomExportResource):
         )
 
 class ProductoAdmin(ExportActionMixin, ImportExportModelAdmin ,admin.ModelAdmin):
+    form = ProductoAdminForm
     resource_class = ProductoResource
     import_id_fields = ()
     list_display = (
@@ -42,6 +44,9 @@ class ProductoAdmin(ExportActionMixin, ImportExportModelAdmin ,admin.ModelAdmin)
     search_help_text = "Nombre del producto, stock, cantidad de medida o precio unitario."
     
     readonly_fields = ('mostrar_imagen',)
+
+    class Media:
+        js = ('js/producto_admin.js',)
 
     def mostrar_imagen(self, obj):
         if obj.imagen:

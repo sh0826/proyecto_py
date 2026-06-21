@@ -1,14 +1,18 @@
 from django.shortcuts import render
 import requests
-import http.client
 
-    # Create your views here.
+
 def catalogo(request):
-    url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka'
-    response = requests.get(url)
-    data = []
-    if response.status_code == 200:
-        data = response.json()
-    else:
-        print('Error al conectar:', response.status_code)   
-    return render(request, "catalogo.html", {"datos": data})
+    # filter.php?i=vodka ahora devuelve muy pocos resultados; search trae más cócteles.
+    url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka'
+    drinks = []
+
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            payload = response.json()
+            drinks = payload.get('drinks') or []
+    except requests.RequestException as exc:
+        print('Error al conectar con la API:', exc)
+
+    return render(request, 'catalogo_api.html', {'drinks': drinks})
