@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Climate+Crisis:YEAR@1979&family=Nabla&family=Press+Start+2P&family=Rubik+Dirt&family=Saira+Stencil+One&family=Syne+Mono&family=Vast+Shadow&display=swap" rel="stylesheet">
 
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
   <header class="container-fluid">
     <div class="container d-flex justify-content-between align-items-center">
       <div class="logo">
@@ -56,7 +56,7 @@
     </div>
   </header>
 
-  <main class="py-4 container flex-fill">
+  <main class="{% block main_class %}py-4 container{% endblock %} flex-fill">
     {% block content %}
     {% endblock%}
   </main>
