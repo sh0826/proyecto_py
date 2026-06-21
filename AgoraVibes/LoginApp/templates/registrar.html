@@ -2,112 +2,187 @@
 {% block titulo %}Registro{% endblock %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% block body_class %}home-page{% endblock %}
+{% block main_class %}home-main flex-fill p-0{% endblock %}
 
 {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-    .auth-card {
-        max-width: 520px;
-        margin: 60px auto;
-        padding: 40px 30px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 123, 0, 0.2);
-        border-radius: 12px;
-        color: #fff;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-    .auth-title {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 700;
-        font-size: 2.25rem;
-        color: #ff7b00;
-        text-align: center;
-        margin-bottom: 30px;
-        letter-spacing: 1px;
-        text-shadow: 0 0 10px rgba(255, 123, 0, 0.3);
-    }
-    
-    .auth-card .form-control {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 123, 0, 0.15) !important;
-        color: #fff !important;
-        border-radius: 6px !important;
-        padding: 12px 15px !important;
-        margin-bottom: 20px !important;
-        transition: all 0.3s ease !important;
-    }
-    .auth-card .form-control:focus {
-        border-color: #ff7b00 !important;
-        box-shadow: 0 0 8px rgba(255, 123, 0, 0.3) !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-    }
-    .auth-card label {
-        font-family: 'Outfit', sans-serif;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #b0b0b0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 6px;
-    }
-    .btn-auth {
-        background: #ff7b00 !important;
-        border: none !important;
-        color: #000 !important;
-        font-weight: 700;
-        font-family: 'Outfit', sans-serif;
-        padding: 12px;
-        width: 100%;
-        border-radius: 6px;
-        margin-top: 15px;
-        transition: all 0.3s ease;
-        letter-spacing: 0.5px;
-    }
-    .btn-auth:hover {
-        background: #e06a00 !important;
-        box-shadow: 0 0 12px rgba(255, 123, 0, 0.4);
-    }
-    .auth-footer {
-        text-align: center;
-        margin-top: 25px;
-        font-family: 'Outfit', sans-serif;
-        font-size: 0.9rem;
-    }
-    .auth-link {
-        color: #ff7b00;
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s ease;
-    }
-    .auth-link:hover {
-        color: #fff;
-        text-decoration: underline;
-    }
+.home-page { background: #000; color: #fff; }
+.home-main { background: #000; max-width: 100%; }
+
+.auth-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: #000;
+    min-height: calc(100vh - 280px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+}
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 540px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 540px;
+    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.5rem, 4vw, 2.5rem);
+    background:
+        radial-gradient(ellipse at top, rgba(197, 157, 95, 0.18) 0%, transparent 60%),
+        linear-gradient(145deg, rgba(26, 22, 12, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%);
+    border: 1px solid rgba(197, 157, 95, 0.55);
+    border-radius: 20px;
+    box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.12),
+        0 20px 60px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    color: #fff;
+    position: relative;
+    overflow: visible;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c59d5f, #d4af37, #c59d5f, transparent);
+    border-radius: 20px 20px 0 0;
+}
+
+.auth-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: #d4af37;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+    line-height: 1.25;
+    text-shadow: 2px 2px 0 #000, 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.auth-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.auth-card .form-control,
+.auth-card .form-select {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(197, 157, 95, 0.35) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;
+    margin-bottom: 18px !important;
+    transition: all 0.3s ease !important;
+}
+
+.auth-card .form-control:focus,
+.auth-card .form-select:focus {
+    border-color: #d4af37 !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.auth-card label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e8c96a;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.btn-auth {
+    background: linear-gradient(135deg, #d4af37 0%, #a67c00 100%) !important;
+    border: none !important;
+    color: #1a1200 !important;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn-auth:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(212, 175, 55, 0.45);
+    color: #000 !important;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.75rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+}
+
+.auth-link {
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.auth-alert {
+    font-family: 'Playfair Display', serif;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(197, 157, 95, 0.45);
+    color: #e8c96a;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
 </style>
 
-//mensaje de éxito
+<section class="auth-section">
+    <div class="auth-wrapper">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert auth-alert alert-{{ message.tags }} fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-success fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
-{% endif %}
+        <div class="auth-card" data-aos="fade">
+        <h1 class="auth-title">Nueva cuenta</h1>
+        <p class="auth-subtitle">Únete a Agora Vibes y reserva tu próxima noche</p>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form|crispy }}
 
-<div class="auth-card" data-aos="fade">
-    <h1 class="auth-title">NUEVA CUENTA</h1>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form|crispy }}
-        
-        <button type="submit" class="btn-auth">REGISTRARSE</button>
-        
-        <div class="auth-footer text-succes">
-            ¿Ya tienes una cuenta registrada? <a href="{% url 'login' %}" class="auth-link">Inicia Sesión</a>
+            <button type="submit" class="btn-auth">Registrarse</button>
+
+            <div class="auth-footer">
+                ¿Ya tienes una cuenta?
+                <a href="{% url 'login' %}" class="auth-link">Inicia sesión</a>
+            </div>
+        </form>
         </div>
-    </form>
-</div>
+    </div>
+</section>
 {% endblock %}

@@ -1,31 +1,158 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% block titulo %}Eventos{% endblock %}
 {% load static %}
+{% block body_class %}home-page{% endblock %}
+{% block main_class %}home-main flex-fill p-0{% endblock %}
+
 {% block content %}
-<h1 class="text-dark text-center" style="font-family: Rubik Dirt, system-ui;">Eventos programados</h1>
-<div class="conteiner row">
-    {% for e in eventos %}
-        <div class="col-md-3">
-            <div class="card rounded mt-3 bg-dark">
-                <img src="{{ e.imagen.url }}" alt="{{ e.nombre }}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title text-white" style="font-family: Black Ops One, system-ui;" > {{ e.nombre }}</h5>
-                    <h4 class="text-warning card-subtitle mb-2 fw-bold " style="font-family: Saira Stencil One, sans-serif;">Precio $ {{ e.precio_boleta}}</h4>
-                    <p class="card-text text-white">{{e.descripcion}}</p>
-                    {% if e.cupos_disponibles > 0 %}
-                        <p class="text-warning" style="font-family: Black Ops One, system-ui;">
-                         Cupos disponibles: {{ e.cupos_disponibles}}
-                        </p>
-                    {% else %}
-                        <p class="text-danger fw-bold">
-                            AGOTADO
-                        </p>
-                    {% endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+.home-page { background: #000; color: #fff; }
+.home-main { background: #000; max-width: 100%; }
+
+.eventos-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: #000;
+    padding: 3rem 1.5rem 4rem;
+}
+
+.eventos-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: #d4af37;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    letter-spacing: 2px;
+    line-height: 1.25;
+    text-shadow: 2px 2px 0 #000, 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.eventos-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+}
+
+.evento-card {
+    background:
+        radial-gradient(ellipse at top, rgba(197, 157, 95, 0.12) 0%, transparent 55%),
+        linear-gradient(145deg, rgba(26, 22, 12, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%);
+    border: 1px solid rgba(197, 157, 95, 0.45);
+    border-radius: 16px;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.evento-card:hover {
+    transform: translateY(-6px);
+    border-color: #d4af37;
+    box-shadow: 0 18px 50px rgba(212, 175, 55, 0.2);
+}
+
+.evento-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9);
+    transition: filter 0.3s;
+}
+
+.evento-card:hover img {
+    filter: brightness(1);
+}
+
+.evento-card .card-body {
+    padding: 1.25rem 1.35rem 1.5rem;
+}
+
+.evento-card .card-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: #d4af37;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.evento-card .card-precio {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #e8c96a;
+    margin-bottom: 0.75rem;
+}
+
+.evento-card .card-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+}
+
+.evento-card .cupos {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #d4af37;
+    margin: 0;
+}
+
+.evento-card .agotado {
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    color: #e05a5a;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.eventos-empty {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 3rem 1rem;
+}
+</style>
+
+<section class="eventos-section">
+    <h1 class="eventos-title">Eventos programados</h1>
+    <p class="eventos-subtitle">Descubre las noches especiales que tenemos para ti en Agora Vibes</p>
+
+    <div class="container-fluid px-md-4">
+        <div class="row g-4">
+            {% for e in eventos %}
+            <div class="col-md-6 col-lg-3">
+                <div class="evento-card" data-aos="fade-up">
+                    <img src="{{ e.imagen.url }}" alt="{{ e.nombre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ e.nombre }}</h5>
+                        <p class="card-precio">Precio $ {{ e.precio_boleta }}</p>
+                        <p class="card-text">{{ e.descripcion }}</p>
+                        {% if e.cupos_disponibles > 0 %}
+                            <p class="cupos">Cupos disponibles: {{ e.cupos_disponibles }}</p>
+                        {% else %}
+                            <p class="agotado">Agotado</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="eventos-empty">No hay eventos disponibles por el momento.</p>
+            </div>
+            {% endfor %}
         </div>
-    {% empty %}
-        <h3 class="text-danger text-center">No hay eventos</h3>
-    {% endfor %}
-</div>
+    </div>
+</section>
 {% endblock %}
