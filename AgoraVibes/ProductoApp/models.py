@@ -14,6 +14,12 @@ class Producto (models.Model):
         ('paquete', 'Paquete'),
         ('medio', 'Medio'),
     ]
+    CANTIDAD_MD =[
+        ('330', "330"),
+        ('375', "375"),
+        ('1', '1'),
+        ('medio', 'Medio'),
+    ]
     nombre = models.CharField(
         max_length=20,
         verbose_name='Nombre',
@@ -25,20 +31,19 @@ class Producto (models.Model):
         ],
     )
     tipo = models.CharField(verbose_name='Tipo', max_length=20, choices=TIPO_PRODUCTO)
-    cantidad_MD = models.IntegerField(
-        null=True,
-        blank=True,
-        verbose_name='Cantidad de Medida',
-        validators=[MinValueValidator(0), MaxValueValidator(1500)],
-    )
+
+    cantidad_MD = models.IntegerField(null=True, blank=True, verbose_name='Cantidad de Medida', choices=CANTIDAD_MD)
+
     unidad_MD = models.CharField(max_length=8, choices=UNIDAD_MD, null=True, blank=True, verbose_name='Unidad de Medida')
     stock = models.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(1200)],
     )
+    
     precio_unitario = models.IntegerField(
         verbose_name='Precio Unitario',
         validators=[MinValueValidator(0), MaxValueValidator(500000)],
     )
+    
     imagen = models.ImageField(upload_to="ProductoApp", null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
