@@ -33,7 +33,7 @@ class Producto (models.Model):
     )
     unidad_MD = models.CharField(max_length=8, choices=UNIDAD_MD, null=True, blank=True, verbose_name='Unidad de Medida')
     stock = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(500)],
+        validators=[MinValueValidator(0), MaxValueValidator(1200)],
     )
     precio_unitario = models.IntegerField(
         verbose_name='Precio Unitario',
