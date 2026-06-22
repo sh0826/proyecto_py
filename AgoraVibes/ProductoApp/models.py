@@ -17,6 +17,7 @@ class Producto (models.Model):
     CANTIDAD_MD =[
         ('330', "330"),
         ('375', "375"),
+        ('750', "750"),
         ('1', '1'),
         ('medio', 'Medio'),
     ]
