@@ -32,7 +32,7 @@ class Producto (models.Model):
     )
     tipo = models.CharField(verbose_name='Tipo', max_length=20, choices=TIPO_PRODUCTO)
 
-    cantidad_MD = models.IntegerField(null=True, blank=True, verbose_name='Cantidad de Medida', choices=CANTIDAD_MD)
+    cantidad_MD = models.CharField(null=True, blank=True, max_length=20, verbose_name='Cantidad de Medida', choices=CANTIDAD_MD)
 
     unidad_MD = models.CharField(max_length=8, choices=UNIDAD_MD, null=True, blank=True, verbose_name='Unidad de Medida')
     stock = models.IntegerField(

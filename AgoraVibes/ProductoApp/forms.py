@@ -14,12 +14,6 @@ class ProductoAdminForm(forms.ModelForm):
                 'title': 'Solo se permiten letras y espacios.',
                 'maxlength': '20',
             }),
-            'cantidad_MD': forms.NumberInput(attrs={
-                'min': 0,
-                'max': 1500,
-                'step': 1,
-                'inputmode': 'numeric',
-            }),
             'stock': forms.NumberInput(attrs={
                 'min': 0,
                 'max': 500,

@@ -12,6 +12,7 @@ class ProductoResource(CustomExportResource):
         fields = (
             'nombre',
             'tipo',
+            'cantidad_MD',
             'unidad_MD',
             'stock',
             'precio_unitario',
