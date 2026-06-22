@@ -199,3 +199,30 @@ nav ul {
 .asteriskField {
     display: none;
 }
+
+
+.evento-card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.evento-img{
+    height: 300px;
+    width: 100%;
+    object-fit: over;
+}
+
+.evento-card .card-body{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-text{
+    min-height: 80px;
+}
+
+.estado-cupos{
+    min-height: 30px;
+}

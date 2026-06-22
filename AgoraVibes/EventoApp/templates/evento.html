@@ -140,6 +140,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ e.nombre }}</h5>
                         <p class="card-precio">Precio $ {{ e.precio_boleta }}</p>
+                        <h5 class="card-title">Fecha: {{ e.fecha }}</h5>
                         <p class="card-text">{{ e.descripcion }}</p>
                         {% if e.cupos_disponibles > 0 %}
                             <p class="cupos">Cupos disponibles: {{ e.cupos_disponibles }}</p>
