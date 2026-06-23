@@ -34,16 +34,6 @@ class ProductoAdminForm(forms.ModelForm):
             raise ValidationError('El nombre solo puede contener letras y espacios.')
         return nombre
 
-    def clean_cantidad_MD(self):
-        valor = self.cleaned_data.get('cantidad_MD')
-        if valor is None:
-            return valor
-        if valor < 0:
-            raise ValidationError('La cantidad de medida no puede ser negativa.')
-        if valor > 1500:
-            raise ValidationError('La cantidad de medida no puede superar 1500.')
-        return valor
-
     def clean_stock(self):
         valor = self.cleaned_data.get('stock')
         if valor is None:
